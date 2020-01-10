@@ -1,4 +1,5 @@
 library(shiny)
+library(DT)
 library(ggplot2)  # for the diamonds dataset
 responses<-read.csv("Data Discovery NOV17.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 ui <- fluidPage(
