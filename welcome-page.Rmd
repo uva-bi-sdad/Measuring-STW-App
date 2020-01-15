@@ -1,0 +1,52 @@
+---
+output: html_document
+---
+
+
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 18px;
+  }
+td {  /* Table  */
+  font-size: 14px;
+}
+h1.title {
+  font-size: 38px;
+
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #1B3766;
+}
+h2 { /* Header 2 */
+    font-size: 22px;
+  color: #1B3766;
+}
+h3 { /* Header 3 */
+  font-size: 22px;
+  color: #1B3766;
+}
+code.r{ /* Code block */
+    font-size: 11px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+</style>
+
+
+# Welcome
+
+This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's National Center for Science and Engineering Statistics. 
+
+
+### Instructions
+
+
+
+
+### Who We Are
+The Social and Decision Analytics division (SDAD) is one of three research divisions within the Biocomplexity Institute at the University of Virginia. SDAD combines expertise in statistics and social and behavioral sciences to develop evidence-based research and quantitative methods to inform policy decision-making and evaluation. The researchers at SDAD span many disciplines including statistics, economics, sociology, psychology, political science, policy, health IT, public health, program evaluation, and data science. The SDAD office is located near our nation's capital in Arlington, VA. Learn more about us at [biocomplexity.virginia.edu](biocomplexity.virginia.edu). 
+
+### Contact
