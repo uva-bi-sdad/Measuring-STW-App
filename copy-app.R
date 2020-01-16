@@ -9,6 +9,7 @@ library(stringi)
 
 #this will select commas outside of parenthesis ,(?![^(]*\))
 
+
 ##### THEME COLORS #####
 theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D")
 wheel <- function(col, radius = 1, ...)
@@ -90,14 +91,13 @@ ui <- fluidPage(
                     
                     }
                     
-                    "))
+                    ")
+               ), 
     ),
-  
-  
-  
+    
   title = "Data Discovery",
   titlePanel(
-    fluidRow(
+     fluidRow(
       column(3, img(height = 51.65, width = 243.3, src = "BII.jpg")),
       column(9, h1("Data Discovery - Skilled Technical Workforce", style = "font-weight: bold; font-size: 30pt;"))
     )
@@ -115,7 +115,7 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       id = 'dataset',
-      tabPanel("About", includeMarkdown("welcome-page.Rmd")),
+     tabPanel( "About", includeMarkdown("welcome-page.Rmd")),
       tabPanel("Datasets",
                #this puts the sidebar visible only for first tab 
                sidebarPanel(
@@ -136,8 +136,7 @@ ui <- fluidPage(
                 #selectInput("category", "Category", choices=c("Credentials..Yes.No.", "Jobs..Yes.No.", "Employers..Yes.No.", "Skills..Yes.No.", "Organization.Type" ))), 
                 plotOutput("Plot") ), 
       #we can make the Dictionary a Markdown file or HTML rather than typing it in R
-      tabPanel("Dictionary", 
-               tags$h1(tags$b("This is where the data dictionary goes!")), tags$b("test")),
+      tabPanel("Dictionary", includeMarkdown("data-dictionary.Rmd")),
       tabPanel("Form", DT::dataTableOutput("form", width = 300), tags$hr(),
               fluidRow( column(4, textInput("Name", "Name", ""), 
                textInput("Affiliation", "Affiliation", ""),
@@ -288,4 +287,5 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
+
 

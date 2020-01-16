@@ -2,7 +2,6 @@
 output: html_document
 ---
 
-
 <style type="text/css">
 
 body{ /* Normal  */
@@ -38,7 +37,26 @@ pre { /* Code block - determines code spacing between lines */
 
 # Welcome
 
-This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's National Center for Science and Engineering Statistics. 
+This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's National Center for Science and Engineering Statistics. The purpose is to assess the fitness-for-use of federal, for profit, and not-for-profit administrative data sources and other non-survey data sources for describing the skilled technical workforce.
+
+### What is the Skilled Technical Workforce (STW)?
+A job in the STW requires 
+
+  1. a high level of knowledge in a technical domain; but
+  
+  2. does not require a bachelor's degree for entry.
+
+There are numerous data gaps in describing the STW. They include:
+
+  1. Non-degree credential attainment;
+  
+  2. STW demographic variables, such as gender, race, ethnicity, age, and disability;
+  
+  3. STW skills and non-degree credentials demanded by employers for STW occupations;
+  
+  4. Skills and non-degree credentials supplied by the jobs seekers; and
+  
+  5. STW job environment variables, including employer size, self-employed work, full and part-time work, salary, and benefits.
 
 
 ### Instructions

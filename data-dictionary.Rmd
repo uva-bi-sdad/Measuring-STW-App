@@ -1,0 +1,55 @@
+---
+output: html_document
+---
+
+<style type="text/css">
+
+body{ /* Normal  */
+      font-size: 18px;
+  }
+td {  /* Table  */
+  font-size: 14px;
+}
+h1.title {
+  font-size: 38px;
+
+}
+h1 { /* Header 1 */
+  font-size: 28px;
+  color: #1B3766;
+}
+h2 { /* Header 2 */
+    font-size: 22px;
+  color: #1B3766;
+}
+h3 { /* Header 3 */
+  font-size: 22px;
+  color: #1B3766;
+}
+code.r{ /* Code block */
+    font-size: 11px;
+}
+pre { /* Code block - determines code spacing between lines */
+    font-size: 14px;
+}
+</style>
+
+
+# Dictionary
+
+__Data Source:__ An organization collecting the data and link to the organization.
+
+__Dataset Name:__ An organization's name for the dataset and link to the dataset.
+
+__Dataset Subject:__ The main topic(s) addressed in the dataset.
+
+  - _Education/Training_
+  
+  - _Licenses/Certifications_
+  
+  - _Jobs/Employment_
+  
+  - _Industry_
+  
+__Data Type:__ The 
+
