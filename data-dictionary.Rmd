@@ -39,7 +39,23 @@ pre { /* Code block - determines code spacing between lines */
 
 __Data Source:__ An organization collecting the data and link to the organization.
 
+__Credentials:__ 
+
+  - _Yes_
+  
+  - _No_
+
+__Skills:__
+
+__Jobs:__
+
+__Employers:__
+
+__STW Relevant:__
+
 __Dataset Name:__ An organization's name for the dataset and link to the dataset.
+
+__Dataset Link:__
 
 __Dataset Subject:__ The main topic(s) addressed in the dataset.
 
@@ -51,5 +67,61 @@ __Dataset Subject:__ The main topic(s) addressed in the dataset.
   
   - _Industry_
   
+__Organization Type:__
+  
 __Data Type:__ The 
+
+__Purpose:__
+
+__Audience:__
+
+__Population Coverage:__
+
+__Unit of Analysis:__
+
+__Geographic Unit:__
+
+__Time Coverage:__
+
+__Collection Frequency:__
+
+__When does the data become available?:__
+
+__Can this data be trended?:__
+
+__Methodology Report Link:__
+
+__Data Dictionary Link:__
+
+__Data Quality Assessments:__
+
+__Cost/Price:__
+
+__Funding amount to support R&D:__
+
+__Licensing or Training Required?:__
+
+__Accessibility:__
+
+__Data Format:__
+
+__Individuals Identifiable?:__
+
+__Gender:__
+
+__Race/Ethnicity:__
+
+__Veterans:__
+
+__Active Military:__
+
+__Persons who live on tribal lands?:__
+
+__Fields of Study/Types of Training:__
+
+__Types of Employment/Occupations:__
+
+__Notes:__ Any additional information relevant to the data source.
+                
+
 
