@@ -10,6 +10,7 @@ library(stringi)
 library(gtools)
 
 
+
 ##### THEME COLORS #####
 theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D")
 wheel <- function(col, radius = 1, ...)
@@ -17,10 +18,10 @@ wheel <- function(col, radius = 1, ...)
 wheel(theme_Palette)
 
 ##### DATA #####
-responses<-read.csv("Data Discovery NOV17.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
+responses<-read.csv("data-discovery-jan-20.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 
 # Assign columns readable names
-names(responses) <- gsub("\\.|\\.\\.Yes\\.No\\.", " ", names(responses))
+names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
 
 
 ##### FORM RESPONSES DIRECTORY #####
@@ -32,7 +33,7 @@ fields <- c("Name", "Affiliation", "Data Source Name", "Credentials", "Skills", 
                  "Dataset Name", "Dataset Link", "Subject", "Organization", "Data Type", "Purpose", "Audience", "Population Coverage", 
                  "Unit of Analysis", "Geographic Unit", "Time Coverage", "Collection Frequency", "When does the data become available?", "Can this data be trended?", 
                  "Methodology Report Link", "Data Dictionary Link", "Data Quality Assessments", "Cost/Price", "Funding amount to support R&D", "Licensing or Training Required?", 
-                 "Accessibility", "Data Format", "Individuals Identifiable", "Gender", "Race/Ethnicity", "Persons Who Live on Tribals Lands", "Veterans", "Active Military", "Persons Who Live on Tribal Lands", 
+                 "Accessibility", "Data Format", "Individuals Identifiable", "Gender", "Race/Ethnicity", "Veterans", "Active Military", "Persons Who Live on Tribal Lands", 
                  "Fields of Study/Types of Training", "Types of Employment/Occupations", "Notes")
 
 field_list <- c(fields, "submit_time")
@@ -135,10 +136,10 @@ ui <- fluidPage(
     tabsetPanel(
       id = 'dataset',
       tabPanel( "About", includeMarkdown("welcome-page.Rmd")),
-      tabPanel("Datasets",
+      tabPanel("Data Sources",
                #this puts the sidebar visible only for first tab 
                sidebarPanel(
-                 checkboxGroupInput("show_vars", "Columns in Datasets to show:", 
+                 checkboxGroupInput("show_vars", "Columns in Data Sources to show:", 
                                     choiceNames=stri_trim(gsub(names(responses),pattern=("\\.|\\.\\.Yes\\.No\\."),replacement=" "), side = "right"), 
                                     choiceValues = names(responses),
                                     selected=names(responses)) , 
@@ -225,6 +226,7 @@ server <- function(input, output, session) {
                   filter = "top",
                   # style = "bootstrap", 
                   # class = "table-hover",
+                  
                   options = list(buttons = list(list(extend='csv',
                                                      filename = 'STW-Data-Discovery'),
                                                 list(extend='excel',
@@ -260,7 +262,7 @@ server <- function(input, output, session) {
       scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
       geom_bar() +
       theme_minimal() +
-      labs(title = stri_trim(gsub(input$category,pattern=("\\.|\\.\\.Yes\\.No\\."),replacement=" "), side = "right"), y = "Number of Sources", x = "")+
+      labs(title = input$category, y = "Number of Sources", x = "") +
       theme(
         legend.position = "none", 
         plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),

@@ -214,17 +214,29 @@ pre { /* Code block - determines code spacing between lines */
 <div id="dictionary" class="section level1">
 <h1>Dictionary</h1>
 <p><strong>Data Source:</strong> An organization collecting the data and link to the organization.</p>
-<p><strong>Credentials:</strong></p>
+<p><strong>Credentials:</strong> Indicates if the dataset includes information on credentials.</p>
 <ul>
 <li><p><em>Yes</em></p></li>
 <li><p><em>No</em></p></li>
 </ul>
-<p><strong>Skills:</strong></p>
-<p><strong>Jobs:</strong></p>
-<p><strong>Employers:</strong></p>
-<p><strong>STW Relevant:</strong></p>
+<p><strong>Skills:</strong> Indicates if the dataset includes information on skills.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Jobs:</strong> Indicates if the dataset includes information on jobs.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Employers:</strong> Indicates if the dataset includes information on employers.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>STW Relevant:</strong> A description of how the data source can be used to describe the STW.</p>
 <p><strong>Dataset Name:</strong> An organization’s name for the dataset and link to the dataset.</p>
-<p><strong>Dataset Link:</strong></p>
+<p><strong>Dataset Link:</strong> A link, if available, to the dataset.</p>
 <p><strong>Dataset Subject:</strong> The main topic(s) addressed in the dataset.</p>
 <ul>
 <li><p><em>Education/Training</em></p></li>
@@ -232,33 +244,100 @@ pre { /* Code block - determines code spacing between lines */
 <li><p><em>Jobs/Employment</em></p></li>
 <li><p><em>Industry</em></p></li>
 </ul>
-<p><strong>Organization Type:</strong></p>
-<p><strong>Data Type:</strong> The</p>
-<p><strong>Purpose:</strong></p>
-<p><strong>Audience:</strong></p>
-<p><strong>Population Coverage:</strong></p>
-<p><strong>Unit of Analysis:</strong></p>
-<p><strong>Geographic Unit:</strong></p>
-<p><strong>Time Coverage:</strong></p>
-<p><strong>Collection Frequency:</strong></p>
-<p><strong>When does the data become available?:</strong></p>
-<p><strong>Can this data be trended?:</strong></p>
-<p><strong>Methodology Report Link:</strong></p>
-<p><strong>Data Dictionary Link:</strong></p>
-<p><strong>Data Quality Assessments:</strong></p>
-<p><strong>Cost/Price:</strong></p>
-<p><strong>Funding amount to support R&amp;D:</strong></p>
-<p><strong>Licensing or Training Required?:</strong></p>
-<p><strong>Accessibility:</strong></p>
-<p><strong>Data Format:</strong></p>
-<p><strong>Individuals Identifiable?:</strong></p>
-<p><strong>Gender:</strong></p>
-<p><strong>Race/Ethnicity:</strong></p>
-<p><strong>Veterans:</strong></p>
-<p><strong>Active Military:</strong></p>
-<p><strong>Persons who live on tribal lands?:</strong></p>
-<p><strong>Fields of Study/Types of Training:</strong></p>
-<p><strong>Types of Employment/Occupations:</strong></p>
+<p><strong>Organization Type:</strong> Indicates if the organization providing the dataset is for-profit, non-profit, or federal.</p>
+<ul>
+<li><p><em>For-Profit</em></p></li>
+<li><p><em>Non-Profit</em></p></li>
+<li><p><em>Federal</em></p></li>
+</ul>
+<p><strong>Data Type:</strong> Describes the data by broad method(s) used for collection.</p>
+<ul>
+<li><p><em>Administrative:</em> Statistically designed data collections, such as surveys and experiments, and intentional data collections such as astronomical observaations, remote sensing, and health registeries.</p></li>
+<li><p><em>Designed (Survey):</em> Collected for the administration of an organization or program by entities, such as government agencies, as they provide services, companies to track orders, and universities to record registered students.</p></li>
+<li><p><em>Opportunity:</em> Derived from internet-based information, such as websites and social media and captured through APIs and web scraping.</p></li>
+<li><p><em>Procedural:</em> Focus on processes and policies such as a change in health care coverage or a data repository policy that outlines procedures and metadata required to store data.</p></li>
+</ul>
+<p><strong>Purpose:</strong> A brief explanation of the purpose and history of the dataset.</p>
+<p><strong>Audience:</strong> Lists the main users of the dataset, or for whom the dataset was compiled.</p>
+<p><strong>Population Coverage:</strong> Description of the target population and observations in the sample or population.</p>
+<p><strong>Unit of Analysis:</strong> The smallest unit in the dataset on which information is provided.</p>
+<p><strong>Geographic Unit:</strong> A list of all geographic variables contained in the dataset.</p>
+<p><strong>Time Coverage:</strong> The start and end date of the dataset.</p>
+<p><strong>Collection Frequency:</strong> Indicates how often the data is collected.</p>
+<p><strong>When does the data become available?:</strong> Indicates how frequently new data are made available.</p>
+<p><strong>Can this data be trended?:</strong> Indicates if the dataset can be trended.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Methodology Report Link:</strong> A link, if available, to the methodology report for the dataset.</p>
+<p><strong>Data Dictionary Link:</strong> A link, if available, to the data dictionary for the dataset.</p>
+<p><strong>Data Quality Assessments:</strong> A description including biases and issues of the dataset and if the dataset can be benchmarked against an existing survey.</p>
+<p><strong>Cost/Price:</strong> Lists any fees for using the dataset.</p>
+<p><strong>Funding amount to support R&amp;D:</strong> Lists any funding provided by the organization for uses of the dataset that support R&amp;D.</p>
+<p><strong>Licensing or Training Required?:</strong> Indicates if licensing or training is required for use of the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Accessibility:</strong> Method(s) of acquiring data.</p>
+<ul>
+<li><p><em>Download</em></p></li>
+<li><p><em>FTP</em></p></li>
+<li><p><em>Portal</em></p></li>
+<li><p><em>Webscraping</em></p></li>
+</ul>
+<p><strong>Data Format:</strong> The format(s) in which the data is available.</p>
+<ul>
+<li><p><em>CSV</em></p></li>
+<li><p><em>Excel</em></p></li>
+<li><p><em>SAS</em></p></li>
+<li><p><em>SPSS</em></p></li>
+<li><p><em>R</em></p></li>
+<li><p><em>JSON</em></p></li>
+<li><p><em>TXT</em></p></li>
+<li><p><em>PDF</em></p></li>
+</ul>
+<p><strong>Individuals Identifiable?:</strong> Indicates if personally identifiable information is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Gender:</strong> Indicates if information on gender is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Race/Ethnicity:</strong> Indicates if information on race or ethnicity is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Veterans:</strong> Indicates if information on veterans is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Active Military:</strong> Indicates if information on active military is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Persons who live on tribal lands?:</strong> Indicates if information on tribal lands is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Fields of Study/Types of Training:</strong> Indicates if information on field of study or types of training is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
+<p><strong>Types of Employment/Occupations:</strong> Indicates if information on employment or occupations is included in the dataset.</p>
+<ul>
+<li><p><em>Yes</em></p></li>
+<li><p><em>No</em></p></li>
+</ul>
 <p>__<a href="Notes:__" class="uri">Notes:__</a> Any additional information relevant to the data source.</p>
 </div>
 
