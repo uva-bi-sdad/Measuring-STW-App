@@ -2,6 +2,7 @@
 #https://shiny.rstudio.com/articles/persistent-data-storage.html PERSISTENT STORAGE
 # https://stat.ethz.ch/pipermail/r-help/2017-June/447450.html This is for styling RMarkdown file
 # https://gupsych.github.io/tquant/data-input.html saving checkbox group
+# https://cran.r-project.org/web/packages/vcd/vignettes/strucplot.pdf this is helpful for mosaic plots
 
 library(shiny)
 library(DT) 
@@ -112,25 +113,17 @@ saveData.feedback <- function(data) {
 
 
 
+
 ##### UI #####
 ui <- fluidPage(
-  
+
   title = "Data Discovery",
-  titlePanel(
+ titlePanel( 
     fluidRow(
-      column(3, img(height = 51.65, width = 243.3, src = "BII.jpg")),
-      column(9, h1("Data Discovery - Skilled Technical Workforce", style = "font-weight: bold; font-size: 30pt;"))
-    )
-  ),
-  
-  
-  #this puts the side bar visible for all tabs
-  #sidebarLayout(
-  # sidebarPanel(
-  
-  
-  #  checkboxGroupInput("show_vars", "Columns in Datasets to show:",choiceNames=gsub(names(responses),pattern="\\.",replacement=" "), choiceValues=names(responses),selected = names(responses)) 
-  # ,width=2),
+     column(3, img(height = 51.65, width = 243.3, src = "BII.jpg")),
+      column(9, h1("Data Discovery - Skilled Technical Workforce", style = "font-weight: bold; font-size: 24pt; "))
+      ) 
+    ),
   
   mainPanel(
     tabsetPanel(
@@ -145,17 +138,27 @@ ui <- fluidPage(
                                     selected=names(responses)) , 
                  width=3), 
                mainPanel( DT::dataTableOutput("mytable1"))), 
-      #static plots
-      # tabPanel("Plot", fluidRow( column(12,
-      #  splitLayout(cellWidths = c("50%", "50%"), plotOutput("plotgraph1"), plotOutput("plotgraph2")), 
-      #  fluidRow(column(12, splitLayout(cellWidths = c("50%", "50%"), plotOutput("plotgraph3"), plotOutput("plotgraph4"))))))), 
-      #choose plots
       tabPanel( "Plot", 
-                sidebarPanel(
-                  selectInput("category", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" ))),
-                #selectInput("category", "Category", choices=c("Credentials..Yes.No.", "Jobs..Yes.No.", "Employers..Yes.No.", "Skills..Yes.No.", "Organization.Type" ))), 
-                plotOutput("Plot") ), 
-      #we can make the Dictionary a Markdown file or HTML rather than typing it in R
+             fluidRow(
+               column(2, uiOutput("filter_vars"),
+                      uiOutput("select_vars")
+                 
+               ), column(10,  uiOutput("plot")
+                 
+               )
+             )),  
+                
+               
+               
+               
+           #multiple plots without select between one and two variables
+               #fluidRow(column(2,
+                  #selectInput("category", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" ))),
+               #column(10, plotOutput("Plot1"))),
+                #fluidRow(column(2,
+                 # selectInput("category1", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" )), 
+                  #selectInput("category2", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" ))),
+                  #column(10, plotOutput("Plot2")))), 
       tabPanel("Dictionary", includeMarkdown("data-dictionary.Rmd")),
       tabPanel("Form", DT::dataTableOutput("form", width = 300), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
@@ -232,44 +235,115 @@ server <- function(input, output, session) {
                                                 list(extend='excel',
                                                      filename = 'STW-Data-Discovery')),dom="BlfrtipS",iDisplayLength=-1,fixedColumns = TRUE))
   })
-  #static plots
-  #output$plotgraph1 <- renderPlot({
+
+
+  output$filter_vars <- renderUI({
+    radioButtons("rd","Select Option", choices = c("One Variable","Two Variables"),
+                 selected = "One Variable")
+  })
   
-  # ggplot(responses, aes(x = Credentials..Yes.No.))+ 
-  #  geom_bar()+ 
-  # theme_minimal()}, height = 400,width = 400) 
-  
-  
-  #  output$plotgraph2 <- renderPlot({
-  
-  #   ggplot(responses, aes(x = Skills..Yes.No.))+ 
-  #    geom_bar()+
-  #   theme_minimal()}, height = 400,width = 400)
-  #output$plotgraph3 <- renderPlot({
-  
-  # ggplot(responses, aes(x = Jobs..Yes.No.))+ 
-  #  geom_bar()+
-  # theme_minimal()}, height = 400,width = 400)
-  #output$plotgraph4 <- renderPlot({
-  
-  # ggplot(responses, aes(x = Employers..Yes.No.))+ 
-  #  geom_bar() +
-  # theme_minimal()}, height = 400,width = 400)
-  #choose plots
-  output$Plot <- renderPlot({
+  output$select_vars <- renderUI({
+    req(input$rd)
+    if (input$rd == "One Variable") {fluidRow(
+      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )))
+    }
+    else if(input$rd == "Two Variables") {fluidRow(
+      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )),
+      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )))
+    }
     
-    ggplot(responses, aes(x =responses[ ,input$category], fill =responses[ ,input$category]))+ 
-      scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
-      geom_bar() +
-      theme_minimal() +
-      labs(title = input$category, y = "Number of Sources", x = "") +
-      theme(
-        legend.position = "none", 
-        plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-        axis.text.x = element_text(size = 18),
-        axis.text.y = element_text(size = 18), 
-        axis.title.x = element_text(size = 18), 
-        axis.title.y = element_text(size = 18))}, height = 600, width = 800) 
+  })
+
+  
+  
+  
+  
+  output$plot <- renderUI({
+    req(input$rd)
+    if(input$rd=="One Variable") {
+      
+      output$plot1<-renderPlot({
+        # Boxplots of mpg by number of gears 
+        # observations (points) are overlayed and jittered
+        ggplot(responses, aes(x =responses[ , input$category1], fill =responses[ , input$category1]))+ 
+          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
+          geom_bar() +
+          theme_minimal() +
+          labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+          theme(
+            legend.position = "none", 
+            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+            axis.text.x = element_text(size = 18),
+            axis.text.y = element_text(size = 18), 
+            axis.title.x = element_text(size = 18), 
+            axis.title.y = element_text(size = 18))
+      }, height = 600, width = 800)
+      plotOutput("plot1")
+    }
+    
+    
+    else if(input$rd=="Two Variables"){
+      
+      output$plot2<-renderPlot({
+        # Boxplots of mpg by number of gears 
+        # observations (points) are overlayed and jittered
+        
+        ggplot(responses, aes(x =responses[ , input$category2], fill =responses[ , input$category3]))+ 
+          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
+          geom_bar() +
+          theme_minimal() +
+          labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
+          theme(
+            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+            axis.text.x = element_text(size = 18),
+            axis.text.y = element_text(size = 18), 
+            axis.title.x = element_text(size = 18), 
+            axis.title.y = element_text(size = 18))
+      }, height = 600, width = 800)
+      plotOutput("plot2")
+    }
+    
+  })
+  
+  
+  
+  
+  
+  
+  
+  
+  
+#This was for multi plots without select between variables
+  #output$Plot1 <- renderPlot({
+    
+   # ggplot(responses, aes(x =responses[ ,input$category], fill =responses[ ,input$category]))+ 
+    #  scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
+     # geom_bar() +
+      #theme_minimal() +
+      #labs(title = input$category, y = "Number of Sources", x = "") +
+    #  theme(
+     #   legend.position = "none", 
+      #  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+       # axis.text.x = element_text(size = 18),
+        #axis.text.y = element_text(size = 18), 
+        #axis.title.x = element_text(size = 18), 
+        #axis.title.y = element_text(size = 18))}, height = 600, width = 800) 
+  
+#  output$Plot2 <- renderPlot({
+    
+ #   ggplot(responses, aes(x =responses[ ,input$category1], fill =responses[ ,input$category2]))+ 
+  #    scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
+   #   geom_bar() +
+    #  theme_minimal() +
+     # labs(title = paste("Data Sources Containing", input$category1, "Data by", input$category2), y = "Number of Sources", x = "") +
+    #  theme(
+     #   legend.position = "none", 
+      #  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+       # axis.text.x = element_text(size = 18),
+      #  axis.text.y = element_text(size = 18), 
+       # axis.title.x = element_text(size = 18), 
+        #axis.title.y = element_text(size = 18))}, height = 600, width = 800) 
+  
   
   
   ##### FORM DATA #####
