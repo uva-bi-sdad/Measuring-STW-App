@@ -39,6 +39,8 @@ pre { /* Code block - determines code spacing between lines */
 
 This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's National Center for Science and Engineering Statistics. The purpose is to assess the fitness-for-use of federal, for profit, and not-for-profit  data sources for describing the skilled technical workforce. While this application does not provide datasets, it provides links to respective organization websites and/or datasets if available.
 
+***
+
 ### What is the Skilled Technical Workforce (STW)?
 
 A job in the STW requires 
@@ -59,6 +61,7 @@ There are numerous data gaps in describing the STW. They include:
   
   5. STW job environment variables, including employer size, self-employed work, full and part-time work, salary, and benefits.
 
+***
 
 ### Instructions
 A data table with information about each data source is included on the <span style="color:#F17E1D; font-weight: bold">Data Sources</span> tab. You may filter the variables displayed in the data table by checking the boxes on the left-hand side.
@@ -69,9 +72,9 @@ The <span style="color:#F17E1D; font-weight: bold">Data Dictionary</span> tab in
 
 If you see a data source missing from our table, you may fill out the <span style="color:#F17E1D; font-weight: bold">Form</span>. We will review the proposed addition or change and update the data sources table.
 
-Any additional feedback can be submitted through the <span style="color:#F17E1D; font-weight: bold">Feedback</span> tab.
+Any additional feedback can be submitted through the <span style="color:#F17E1D; font-weight: bold">Contact</span> tab.
+
+***
 
 ### Who We Are
 The Social and Decision Analytics division (SDAD) is one of three research divisions within the Biocomplexity Institute at the University of Virginia. SDAD combines expertise in statistics and social and behavioral sciences to develop evidence-based research and quantitative methods to inform policy decision-making and evaluation. The researchers at SDAD span many disciplines including statistics, economics, sociology, psychology, political science, policy, health IT, public health, program evaluation, and data science. The SDAD office is located near our nation's capital in Arlington, VA. Learn more about us at [biocomplexity.virginia.edu](biocomplexity.virginia.edu). 
-
-### Contact
