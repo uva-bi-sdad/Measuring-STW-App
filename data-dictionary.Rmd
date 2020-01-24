@@ -181,6 +181,12 @@ __Race/Ethnicity:__ Indicates if information on race or ethnicity is included in
   
   - _No_
 
+__Persons with Disabilities:__ Indicates if information on persons with disabilities is included in the dataset.
+
+  - _Yes_
+  
+  - _No_
+
 __Veterans:__ Indicates if information on veterans is included in the dataset.
 
   - _Yes_

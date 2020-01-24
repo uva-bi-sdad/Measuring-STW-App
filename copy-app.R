@@ -3,6 +3,7 @@
 # https://stat.ethz.ch/pipermail/r-help/2017-June/447450.html This is for styling RMarkdown file
 # https://gupsych.github.io/tquant/data-input.html saving checkbox group
 # https://cran.r-project.org/web/packages/vcd/vignettes/strucplot.pdf this is helpful for mosaic plots
+#https://stackoverflow.com/questions/36132204/reactive-radiobuttons-with-tooltipbs-in-shiny  This is the solution to the issues
 
 library(shiny)
 library(DT) 
@@ -110,6 +111,25 @@ saveData.feedback <- function(data) {
   )
 }
 
+radioTooltip <- function(id, choice, title, placement = "bottom", trigger = "hover", options = NULL){
+  options = shinyBS:::buildTooltipOrPopoverOptionsList(title, placement, trigger, options)
+  options = paste0("{'", paste(names(options), options, sep = "': '", collapse = "', '"), "'}")
+  bsTag <- shiny::tags$script(shiny::HTML(paste0("
+                                                 $(document).ready(function() {
+                                                 setTimeout(function() {
+                                                 $('input', $('#", id, "')).each(function(){
+                                                 if(this.getAttribute('value') == '", choice, "') {
+                                                 opts = $.extend(", options, ", {html: true});
+                                                 $(this.parentElement).tooltip('destroy');
+                                                 $(this.parentElement).tooltip(opts);
+                                                 }
+                                                 })
+                                                 }, 500)
+                                                 });
+                                                 ")))
+  htmltools::attachDependencies(bsTag, shinyBS:::shinyBSDep)
+}
+
 ##### UI #####
 ui <- fluidPage(
 
@@ -133,7 +153,45 @@ ui <- fluidPage(
                                     choiceValues = names(responses),
                                     selected=names(responses)) , 
                  width=3), 
-               mainPanel( DT::dataTableOutput("mytable1"))), 
+                     radioTooltip(id = "show_vars", choice = "Data Source Name", title = " An organization collecting the data and link to the organization.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Credentials", title = "Indicates if the dataset includes information on credentials.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Skills", title = "Indicates if the dataset includes information on skills.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Jobs", title = "Indicates if the dataset includes information on jobs.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Employers", title = "Indicates if the dataset includes information on employers.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "STW Relevant", title = "A description of how the data source can be used to describe the STW.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Dataset Name", title = "An organization’s name for the dataset and link to the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Dataset Link", title = "A link, if available, to the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Subject", title = "The main topic(s) addressed in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Organization Type", title = "Indicates if the organization providing the dataset is for-profit, non-profit, or federal.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Data Type", title = "Describes the data by broad method(s) used for collection.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Purpose", title = "A brief explanation of the purpose and history of the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Audience", title = "Lists the main users of the dataset, or for whom the dataset was compiled.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Population Coverage", title = "Description of the target population and observations in the sample or population.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Unit of Analysis", title = "The smallest unit in the dataset on which information is provided.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Geographic Unit", title = "A list of all geographic variables contained in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Time Coverage", title = "The start and end date of the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Collection Frequency", title = "Indicates how often the data is collected.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "When does the data become available", title = "Indicates how frequently new data are made available.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Can the data be trended", title = "Indicates if the dataset can be trended.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Methodology Report Link", title = "A link, if available, to the methodology report for the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Data Dictionary Link", title = "A link, if available, to the data dictionary for the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Data Quality Assessments", title = "A description including biases and issues of the dataset and if the dataset can be benchmarked against an existing survey.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Cost Price", title = "Lists any fees for using the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Funding amount to support R D", title = "Lists any funding provided by the organization for uses of the dataset that support R&D.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Licensing or Training Required", title = "Indicates if licensing or training is required for use of the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Accessibility", title = "Method(s) of acquiring data.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Data Format", title = "The format(s) in which the data is available.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Individuals Identifiable", title = "Indicates if personally identifiable information is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Gender", title = " Indicates if information on gender is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Race Ethnicity", title = "Indicates if information on race or ethnicity is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Persons with Disabilities", title = "Indicates if information on persons with disabilities is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Veterans", title = "Indicates if information on veterans is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Active military and their families", title = "Indicates if information on active military is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Persons who live on tribal lands", title = "Indicates if information on tribal lands is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Fields of Study", title = "Indicates if information on field of study or types of training is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Types of Employment or Occupations", title = "Indicates if information on employment or occupations is included in the dataset.", placement = "right", trigger = "hover"),
+                     radioTooltip(id = "show_vars", choice = "Notes", title = "Any additional information relevant to the data source.", placement = "right", trigger = "hover"),
+                mainPanel( DT::dataTableOutput("mytable1"))), 
       tabPanel( "Plot", 
              fluidRow(
                column(2, uiOutput("filter_vars"),
@@ -208,7 +266,7 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   output$mytable1 <- DT::renderDataTable({
-    DT::datatable(responses[, input$show_vars, drop = FALSE],  extensions = 'Buttons', filter = "top",
+    DT::datatable(responses[, input$show_vars, drop = FALSE], extensions = 'Buttons', filter = "top",
                    options = list(buttons = list(list(extend='csv',
                                                      filename = 'STW-Data-Discovery'),
                                                 list(extend='excel',
