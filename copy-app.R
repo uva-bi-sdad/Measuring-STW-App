@@ -7,11 +7,6 @@
 #https://stackoverflow.com/questions/36132204/reactive-radiobuttons-with-tooltipbs-in-shiny  This is the solution to the checkbox individual id issues
 
 
-# Before running, make sure you have the welcome page RMD, data dictionary RMD, and data discovery CSV. 
-#You will be reading these in, so you may need to update the file paths for these three files line(37, 152, 209)
-
-
-
 # You should un-comment the following and create two folders using the code below to store the feedback and form data.
 # I re-comment this after running so that I only create the folder once.
 
@@ -33,8 +28,7 @@ wheel <- function(col, radius = 1, ...)
 wheel(theme_Palette)
 
 ##### DATA #####
-# you will need to update the path to file with wherever the CSV is in your computer
-responses <- read.csv("data-discovery-jan-20.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
+responses <- read.csv("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-discovery-jan-20.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
 
 ##### FORM VARIABLES #####
@@ -149,7 +143,7 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       id = 'dataset',
-      tabPanel( "About", includeMarkdown("welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel( "About", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel("Data Sources",
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns in Data Sources to show:", 
@@ -206,7 +200,7 @@ ui <- fluidPage(
                )
              )),  
 
-      tabPanel("Dictionary", includeMarkdown("data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+      tabPanel("Dictionary", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
       tabPanel("Form", DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
