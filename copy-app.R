@@ -1,17 +1,30 @@
+##### These are helpful links I used to create the shiny app ##### 
 #https://shiny.rstudio.com/articles/layout-guide.html LAYOUT
 #https://shiny.rstudio.com/articles/persistent-data-storage.html PERSISTENT STORAGE
-# https://stat.ethz.ch/pipermail/r-help/2017-June/447450.html This is for styling RMarkdown file
-# https://gupsych.github.io/tquant/data-input.html saving checkbox group
-# https://cran.r-project.org/web/packages/vcd/vignettes/strucplot.pdf this is helpful for mosaic plots
-#https://stackoverflow.com/questions/36132204/reactive-radiobuttons-with-tooltipbs-in-shiny  This is the solution to the issues
+#https://stat.ethz.ch/pipermail/r-help/2017-June/447450.html This is for styling RMarkdown file
+#https://gupsych.github.io/tquant/data-input.html This is the solution for the saving checkbox group issue
+#https://cran.r-project.org/web/packages/vcd/vignettes/strucplot.pdf this is helpful for mosaic plots
+#https://stackoverflow.com/questions/36132204/reactive-radiobuttons-with-tooltipbs-in-shiny  This is the solution to the checkbox individual id issues
 
+
+# Before running, make sure you have the welcome page RMD, data dictionary RMD, and data discovery CSV. 
+#You will be reading these in, so you may need to update the file paths for these three files line(37, 152, 209)
+
+
+
+# You should un-comment the following and create two folders using the code below to store the feedback and form data.
+# I re-comment this after running so that I only create the folder once.
+
+#dir.create("feedback")
+#dir.create("form")
+
+#if you do not have these packages, use install.packages("")
 library(shiny)
 library(DT) 
 library(ggplot2)  
 library(stringi)
 library(gtools)
 library(vcd)
-
 
 ##### THEME COLORS #####
 theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D")
@@ -20,33 +33,29 @@ wheel <- function(col, radius = 1, ...)
 wheel(theme_Palette)
 
 ##### DATA #####
-responses<-read.csv("data-discovery-jan-20.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
-
-# Assign columns readable names
+# you will need to update the path to file with wherever the CSV is in your computer
+responses <- read.csv("data-discovery-jan-20.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
 
-
-##### FORM RESPONSES DIRECTORY #####
-#dir.create("form")
-outputDir <- "form"
-
 ##### FORM VARIABLES #####
+outputDir <- "form"
 fields <- c("Name", "Affiliation", "Data Source Name", "Credentials", "Skills", "Jobs", "Employers", "STW Relevant", 
                  "Dataset Name", "Dataset Link", "Subject", "Organization", "Data Type", "Purpose", "Audience", "Population Coverage", 
                  "Unit of Analysis", "Geographic Unit", "Time Coverage", "Collection Frequency", "When does the data become available?", "Can this data be trended?", 
                  "Methodology Report Link", "Data Dictionary Link", "Data Quality Assessments", "Cost/Price", "Funding amount to support R&D", "Licensing or Training Required?", 
                  "Accessibility", "Data Format", "Individuals Identifiable", "Gender", "Race/Ethnicity", "Veterans", "Active Military", "Persons Who Live on Tribal Lands", 
                  "Fields of Study/Types of Training", "Types of Employment/Occupations", "Notes")
-
 field_list <- c(fields, "submit_time")
 
 ##### FEEDBACK VARIABLES #####
+outputDir.feedback <- "feedback"
 fields.feedback <-c("Name.feedback", "Email.feedback", "Comment.feedback")
 field_feedback_list <- c(fields.feedback, "submit_time")
 
+
 ##### FUNCTIONS FOR SAVING AND DISPLAYING FORM INPUTS (see saving checkboxs link) #####
+# This saves the form input data as and .rds object, because CSV does not read lists that are created with the checkbox items
 saveData <- function(input) {
-  # put variables in a data frame
   data <- data.frame(matrix(nrow=1,ncol=0))
   
   for (x in fields) {
@@ -73,7 +82,6 @@ saveData <- function(input) {
   )
 }
 
-
 loadData <- function() {
   files <- list.files(outputDir, full.names = TRUE)
   
@@ -92,11 +100,7 @@ loadData <- function() {
 }
 
 
-##### FEEDBACK RESPONSES DIRECTORY #####
-#dir.create("feedback")
-outputDir.feedback <- "feedback"
-
-##### FUNCTIONS FOR SAVING AND DISPLAYING FEEDBACK INPUTS #####
+##### FUNCTIONS FOR SAVING FEEDBACK INPUTS #####
 saveData.feedback <- function(data) {
   data <- t(data)
   names(data) <- fields.feedback
@@ -111,6 +115,7 @@ saveData.feedback <- function(data) {
   )
 }
 
+##### This function allows tooltips for checkbox items on the data sources tab (see stackoverflow link for further information)#####
 radioTooltip <- function(id, choice, title, placement = "bottom", trigger = "hover", options = NULL){
   options = shinyBS:::buildTooltipOrPopoverOptionsList(title, placement, trigger, options)
   options = paste0("{'", paste(names(options), options, sep = "': '", collapse = "', '"), "'}")
@@ -144,15 +149,15 @@ ui <- fluidPage(
   mainPanel(
     tabsetPanel(
       id = 'dataset',
-      tabPanel( "About", includeMarkdown("welcome-page.Rmd")),
+      tabPanel( "About", includeMarkdown("welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel("Data Sources",
-               #this puts the sidebar visible only for first tab 
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns in Data Sources to show:", 
                                     choiceNames=stri_trim(gsub(names(responses),pattern=("\\.|\\.\\.Yes\\.No\\."),replacement=" "), side = "right"), 
                                     choiceValues = names(responses),
                                     selected=names(responses)) , 
                  width=3), 
+               # the following lines create the hover tooltip for the checkboxes on the Data Sources tab.
                      radioTooltip(id = "show_vars", choice = "Data Source Name", title = " An organization collecting the data and link to the organization.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Credentials", title = "Indicates if the dataset includes information on credentials.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Skills", title = "Indicates if the dataset includes information on skills.", placement = "right", trigger = "hover"),
@@ -196,14 +201,13 @@ ui <- fluidPage(
              fluidRow(
                column(2, uiOutput("filter_vars"),
                       uiOutput("select_vars")
-                 
                ), column(10,  uiOutput("plot")
                  
                )
              )),  
 
-      tabPanel("Dictionary", includeMarkdown("data-dictionary.Rmd")),
-      tabPanel("Form", DT::dataTableOutput("form", width = 300), tags$hr(),
+      tabPanel("Dictionary", includeMarkdown("data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+      tabPanel("Form", DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
                                 textInput("Data Source Name", "Data Source Name", ""),
@@ -264,7 +268,7 @@ ui <- fluidPage(
 
 ##### SERVER #####
 server <- function(input, output, session) {
-  
+  # This outputs the reactive data table on the Data Sources tab
   output$mytable1 <- DT::renderDataTable({
     DT::datatable(responses[, input$show_vars, drop = FALSE], extensions = 'Buttons', filter = "top",
                    options = list(buttons = list(list(extend='csv',
@@ -273,12 +277,13 @@ server <- function(input, output, session) {
                                                      filename = 'STW-Data-Discovery')), dom="BlfrtipS",iDisplayLength=-1,fixedColumns = TRUE))
   })
 
-
+  #This allows filtering between one, two and three variables on the Plots tab
   output$filter_vars <- renderUI({
     radioButtons("rd","Select Option", choices = c("One Variable","Two Variables", "Three Variables"),
                  selected = "One Variable")
   })
   
+  #Designates the variable choices on the drop down menus on the Plots tab
   output$select_vars <- renderUI({
     req(input$rd)
     if (input$rd == "One Variable") {fluidRow(
@@ -294,7 +299,8 @@ server <- function(input, output, session) {
       selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )))
     }
   })
-
+  
+  # This displays the plots
   output$plot <- renderUI({
     req(input$rd)
     if(input$rd=="One Variable") {
@@ -358,6 +364,7 @@ server <- function(input, output, session) {
   
   
   ##### FORM DATA #####
+  #This displays the form entries
   
   formData <- reactive({
     data <- sapply(field_list, function(x) input[[x]])
@@ -365,14 +372,11 @@ server <- function(input, output, session) {
   })
   
   
-  
-  # When the Submit button is clicked, save the form data
   observeEvent(input$submit, {
     saveData(formData())
   })
   
   output$form <- renderDataTable({
-    # update with current response when Submit or Delete are clicked
     input$submit 
     
     loadData()
@@ -401,51 +405,3 @@ server <- function(input, output, session) {
 }
 
 shinyApp(ui, server)
-
-
-
-
-
-
-#multiple plots without select between one and two variables (ui)
-#fluidRow(column(2,
-#selectInput("category", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" ))),
-#column(10, plotOutput("Plot1"))),
-#fluidRow(column(2,
-# selectInput("category1", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" )), 
-#selectInput("category2", "Category", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type" ))),
-#column(10, plotOutput("Plot2")))), 
-
-
-#This was for multi plots without select between variables (server)
-#output$Plot1 <- renderPlot({
-
-# ggplot(responses, aes(x =responses[ ,input$category], fill =responses[ ,input$category]))+ 
-#  scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
-# geom_bar() +
-#theme_minimal() +
-#labs(title = input$category, y = "Number of Sources", x = "") +
-#  theme(
-#   legend.position = "none", 
-#  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-# axis.text.x = element_text(size = 18),
-#axis.text.y = element_text(size = 18), 
-#axis.title.x = element_text(size = 18), 
-#axis.title.y = element_text(size = 18))}, height = 600, width = 800) 
-
-#  output$Plot2 <- renderPlot({
-
-#   ggplot(responses, aes(x =responses[ ,input$category1], fill =responses[ ,input$category2]))+ 
-#    scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
-#   geom_bar() +
-#  theme_minimal() +
-# labs(title = paste("Data Sources Containing", input$category1, "Data by", input$category2), y = "Number of Sources", x = "") +
-#  theme(
-#   legend.position = "none", 
-#  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-# axis.text.x = element_text(size = 18),
-#  axis.text.y = element_text(size = 18), 
-# axis.title.x = element_text(size = 18), 
-#axis.title.y = element_text(size = 18))}, height = 600, width = 800) 
-
-
