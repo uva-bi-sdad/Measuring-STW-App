@@ -1,40 +1,6 @@
 ---
 output: html_document
 ---
-
-<style type="text/css">
-
-body{ /* Normal  */
-      font-size: 18px;
-  }
-td {  /* Table  */
-  font-size: 14px;
-}
-h1.title {
-  font-size: 38px;
-
-}
-h1 { /* Header 1 */
-  font-size: 28px;
-  color: #1B3766;
-}
-h2 { /* Header 2 */
-    font-size: 22px;
-  color: #1B3766;
-}
-h3 { /* Header 3 */
-  font-size: 22px;
-  color: #1B3766;
-}
-code.r{ /* Code block */
-    font-size: 11px;
-}
-pre { /* Code block - determines code spacing between lines */
-    font-size: 14px;
-}
-</style>
-
-
 # Welcome
 
 This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's National Center for Science and Engineering Statistics. The purpose is to assess the fitness-for-use of federal, for profit, and not-for-profit  data sources for describing the skilled technical workforce. While this application does not provide datasets, it provides links to respective organization websites and/or datasets if available.

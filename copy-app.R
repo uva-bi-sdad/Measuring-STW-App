@@ -20,7 +20,7 @@ library(ggplot2)
 library(stringi)
 library(gtools)
 library(vcd)
-
+library(shinythemes)
 ##### THEME COLORS #####
 theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D")
 wheel <- function(col, radius = 1, ...)
@@ -131,16 +131,20 @@ radioTooltip <- function(id, choice, title, placement = "bottom", trigger = "hov
 
 ##### UI #####
 ui <- fluidPage(
+ theme = shinytheme("cosmo"),
 
- title = "Data Discovery",
- titlePanel( 
-    fluidRow(
-     column(3, img(height = 51.65, width = 243.3, src = "BII.jpg")),
-      column(9, h1("Data Discovery - Skilled Technical Workforce", style = "font-weight: bold; font-size: 24pt; "))
-      ) 
-    ),
   
-  mainPanel(
+  # theme = "bootstrap.css",
+  #shinythemes::themeSelector(),
+ title = "Data Discovery",
+ 
+ headerPanel(img(src = 'BII.jpg', class = 'topimage', width = '20%', style = 'display: block; margin-left: auto; margin-right: auto;')),
+   fluidRow(width = 12, 
+          column(12, align = 'center', h1(strong('Data Discovery - Skilled Technical Workforce')))
+ ),
+ 
+  hr(),
+  #mainPanel(
     tabsetPanel(
       id = 'dataset',
       tabPanel( "About", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
@@ -149,8 +153,8 @@ ui <- fluidPage(
                  checkboxGroupInput("show_vars", "Columns in Data Sources to show:", 
                                     choiceNames=stri_trim(gsub(names(responses),pattern=("\\.|\\.\\.Yes\\.No\\."),replacement=" "), side = "right"), 
                                     choiceValues = names(responses),
-                                    selected=names(responses)) , 
-                 width=3), 
+                                    selected=names(responses)), 
+                 width=2), 
                # the following lines create the hover tooltip for the checkboxes on the Data Sources tab.
                      radioTooltip(id = "show_vars", choice = "Data Source Name", title = " An organization collecting the data and link to the organization.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Credentials", title = "Indicates if the dataset includes information on credentials.", placement = "right", trigger = "hover"),
@@ -190,12 +194,12 @@ ui <- fluidPage(
                      radioTooltip(id = "show_vars", choice = "Fields of Study", title = "Indicates if information on field of study or types of training is included in the dataset.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Types of Employment or Occupations", title = "Indicates if information on employment or occupations is included in the dataset.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Notes", title = "Any additional information relevant to the data source.", placement = "right", trigger = "hover"),
-                mainPanel( DT::dataTableOutput("mytable1"))), 
+                mainPanel( DT::dataTableOutput("mytable1"), width = 10)), 
       tabPanel( "Plot", 
              fluidRow(
-               column(2, uiOutput("filter_vars"),
+               column(3, uiOutput("filter_vars"),
                       uiOutput("select_vars")
-               ), column(10,  uiOutput("plot")
+               ), column(9,  uiOutput("plot")
                  
                )
              )),  
@@ -256,7 +260,7 @@ ui <- fluidPage(
                actionButton("submit.feedback", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;"))
     )
   )
-)
+#)
 
 
 
@@ -280,17 +284,17 @@ server <- function(input, output, session) {
   #Designates the variable choices on the drop down menus on the Plots tab
   output$select_vars <- renderUI({
     req(input$rd)
-    if (input$rd == "One Variable") {fluidRow(
-      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )))
+    if (input$rd == "One Variable") {fluidRow(column(width = 12,
+      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" ))))
     }
-    else if(input$rd == "Two Variables") {fluidRow(
+    else if(input$rd == "Two Variables") {fluidRow(column(width = 12, 
       selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )),
-      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )))
+      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" ))))
     }
-    else if(input$rd == "Three Variables"){fluidRow(
+    else if(input$rd == "Three Variables"){fluidRow(column(width = 12, 
       selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
       selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
-      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )))
+      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
     }
   })
   
@@ -312,7 +316,7 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 18), 
             axis.title.x = element_text(size = 18), 
             axis.title.y = element_text(size = 18))
-      }, height = 600, width = 800)
+      }, height = 800, width = 1200)
       plotOutput("plot1")
     }
     
@@ -331,7 +335,7 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 18), 
             axis.title.x = element_text(size = 18), 
             axis.title.y = element_text(size = 18))
-      }, height = 600, width = 800)
+      }, height = 800, width = 1200)
       plotOutput("plot2")
     }
     
@@ -350,7 +354,7 @@ server <- function(input, output, session) {
                labeling_args = list(set_varnames = c(var1 = input$category4, var2 = input$category5, var3 = input$category6), 
                                     rot_labels = c(0, 0, 90)  , offset_varnames = c(0,1,0, 1)
                ))
-      }, height = 600, width = 800)
+      }, height = 800, width = 1200)
       plotOutput("plot3")
     }
 
