@@ -29,6 +29,7 @@ wheel(theme_Palette)
 
 ##### DATA #####
 responses <- read.csv("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-discovery-feb-3.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
+responses<-responses[!apply(responses == "", 1, all),] #remove empty rows
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
 
 ##### FORM VARIABLES #####
@@ -162,7 +163,7 @@ hr(),
       tabPanel("Data Sources",
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns to Show:", 
-                                    choiceNames=stri_trim(gsub(names(responses),pattern=("\\.|\\.\\.Yes\\.No\\."),replacement=" "), side = "right"), 
+                                    choiceNames=names(responses), 
                                     choiceValues = names(responses),
                                     selected=names(responses)), 
                  width=2), 
@@ -280,10 +281,12 @@ server <- function(input, output, session) {
   # This outputs the reactive data table on the Data Sources tab
   output$mytable1 <- DT::renderDataTable({
     DT::datatable(responses[, input$show_vars, drop = FALSE], extensions = 'Buttons', filter = "top",
-                   options = list(buttons = list(list(extend='csv',
+                   options = list(
+                     
+                     buttons = list(list(extend='csv',
                                                      filename = 'STW-Data-Discovery'),
                                                 list(extend='excel',
-                                                     filename = 'STW-Data-Discovery')), dom="BlfrtipS",iDisplayLength=-1,fixedColumns = TRUE))
+                                                     filename = 'STW-Data-Discovery')), dom="BlfrtipS", iDisplayLength=-1, fixedColumns = TRUE))
   })
 
   #This allows filtering between one, two and three variables on the Plots tab
@@ -296,16 +299,16 @@ server <- function(input, output, session) {
   output$select_vars <- renderUI({
     req(input$rd)
     if (input$rd == "One Variable") {fluidRow(column(width = 12,
-      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" ))))
+      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
     }
     else if(input$rd == "Two Variables") {fluidRow(column(width = 12, 
-      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" )),
-      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Organization Type", "Gender" ))))
+      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
+      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
     }
     else if(input$rd == "Three Variables"){fluidRow(column(width = 12, 
-      selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
-      selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
-      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Gender", "Race Ethnicity", "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
+      selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
+      selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
+      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
     }
   })
   
@@ -316,7 +319,7 @@ server <- function(input, output, session) {
       
       output$plot1<-renderPlot({
         ggplot(responses, aes(x =responses[ , input$category1], fill =responses[ , input$category1]))+ 
-          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
+          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
           geom_bar() +
           theme_minimal() +
           labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
@@ -336,7 +339,7 @@ server <- function(input, output, session) {
       
       output$plot2<-renderPlot({
         ggplot(responses, aes(x =responses[ , input$category2], fill =responses[ , input$category3]))+ 
-          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4]))+
+          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
           geom_bar() +
           theme_minimal() +
           labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
