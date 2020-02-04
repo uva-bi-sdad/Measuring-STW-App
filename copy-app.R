@@ -131,20 +131,31 @@ radioTooltip <- function(id, choice, title, placement = "bottom", trigger = "hov
 
 ##### UI #####
 ui <- fluidPage(
- theme = shinytheme("cosmo"),
+ #theme = shinytheme("cosmo"),
 
+  HTML('<script src="//use.typekit.net/tgy5tlj.js"></script>'),
+    
+    HTML('<script>try{Typekit.load();}catch(e){}</script>'),
   
-  # theme = "bootstrap.css",
+  
+  theme = "theme.css",
   #shinythemes::themeSelector(),
- title = "Data Discovery",
  
- headerPanel(img(src = 'BII.jpg', class = 'topimage', width = '20%', style = 'display: block; margin-left: auto; margin-right: auto;')),
-   fluidRow(width = 12, 
-          column(12, align = 'center', h1(strong('Data Discovery - Skilled Technical Workforce')))
- ),
- 
-  hr(),
+title = "Data Discovery",
+
+# https://stackoverflow.com/questions/56407601/how-to-fix-the-position-of-main-panel-in-r-shiny this almost fixes the title Panel
+
+titlePanel(fluidRow(
+      column(3, img(width = '60%', height = '20%', src = "BII.jpg")),
+      column(6, "Data Discovery - Skilled Technical Workforce", align = "center"),
+      column(3, img(width = '20%', height = '20%', src = "NSF.png", align = "right")
+    ))),
+
+
+
+hr(),
   #mainPanel(
+
     tabsetPanel(
       id = 'dataset',
       tabPanel( "About", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
@@ -316,7 +327,7 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 18), 
             axis.title.x = element_text(size = 18), 
             axis.title.y = element_text(size = 18))
-      }, height = 800, width = 1200)
+      }, height = 600, width = 800)
       plotOutput("plot1")
     }
     
@@ -335,7 +346,7 @@ server <- function(input, output, session) {
             axis.text.y = element_text(size = 18), 
             axis.title.x = element_text(size = 18), 
             axis.title.y = element_text(size = 18))
-      }, height = 800, width = 1200)
+      }, height = 600, width = 800)
       plotOutput("plot2")
     }
     
@@ -354,7 +365,7 @@ server <- function(input, output, session) {
                labeling_args = list(set_varnames = c(var1 = input$category4, var2 = input$category5, var3 = input$category6), 
                                     rot_labels = c(0, 0, 90)  , offset_varnames = c(0,1,0, 1)
                ))
-      }, height = 800, width = 1200)
+      }, height = 600, width = 800)
       plotOutput("plot3")
     }
 

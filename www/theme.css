@@ -1,0 +1,30 @@
+h1 {
+   font-family: bodoni-urw, serif;
+   font-weight: 900;
+   font-style: italic;
+   font-size: 36px;
+   text-transform: uppercase;
+}
+
+h2 {
+  font-family: franklin-gothic-urw-cond, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 54px;
+  text-transform: uppercase;
+}
+
+h3 {
+  font-family: franklin-gothic-urw-comp, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  text-transform: uppercase;
+}
+
+body {
+  font-family: franklin-gothic-urw;
+  font-weight: 400;
+  font-size: 24px;
+}
+
