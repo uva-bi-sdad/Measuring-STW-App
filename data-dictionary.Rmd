@@ -1,7 +1,7 @@
 ---
 output: html_document
 ---
-# Dictionary
+### Dictionary
 
 __Data Source:__ An organization collecting the data and link to the organization.
 

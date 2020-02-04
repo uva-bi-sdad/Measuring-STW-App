@@ -1,7 +1,11 @@
 ---
-output: html_document
+output:
+  html_document:
+    css: www/theme.css
 ---
-# WELCOME
+<script src="//use.typekit.net/tgy5tlj.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
+### Welcome
 
 This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's National Center for Science and Engineering Statistics. The purpose is to assess the fitness-for-use of federal, for profit, and not-for-profit  data sources for describing the skilled technical workforce. While this application does not provide datasets, it provides links to respective organization websites and/or datasets if available.
 
@@ -11,21 +15,21 @@ This application was created by the Social and Decision Analytics Division of th
 
 A job in the Skill Technical Workforce (STW) requires 
 
-  1. a high level of knowledge in a technical domain; but
-  
-  2. does not require a bachelor's degree for entry.
+<span class = "test"> 1. </span> a high level of knowledge in a technical domain; but
 
+<span class = "test"> 2. </span> does not require a bachelor's degree for entry.
+<br>   </br>
 There are numerous data gaps in describing the STW. They include:
 
-  1. Non-degree credential attainment;
+<span class = "test"> 1. </span> Non-degree credential attainment;
   
-  2. STW demographic variables, such as gender, race, ethnicity, age, and disability;
+<span class = "test"> 2. </span> STW demographic variables, such as gender, race, ethnicity, age, and disability;
   
-  3. STW skills and non-degree credentials demanded by employers for STW occupations;
+<span class = "test"> 3. </span> STW skills and non-degree credentials demanded by employers for STW occupations;
   
-  4. Skills and non-degree credentials supplied by the jobs seekers; and
-  
-  5. STW job environment variables, including employer size, self-employed work, full and part-time work, salary, and benefits.
+<span class = "test"> 4. </span> Skills and non-degree credentials supplied by the jobs seekers; and
+
+<span class = "test"> 5. </span> STW job environment variables, including employer size, self-employed work, full and part-time work, salary, and benefits.
 
 ***
 
@@ -44,3 +48,5 @@ Any additional feedback can be submitted through the <span style="color:#F17E1D;
 
 ### Who We Are
 The Social and Decision Analytics division (SDAD) is one of three research divisions within the Biocomplexity Institute at the University of Virginia. SDAD combines expertise in statistics and social and behavioral sciences to develop evidence-based research and quantitative methods to inform policy decision-making and evaluation. The researchers at SDAD span many disciplines including statistics, economics, sociology, psychology, political science, policy, health IT, public health, program evaluation, and data science. The SDAD office is located near our nation's capital in Arlington, VA. Learn more about us at [biocomplexity.virginia.edu](biocomplexity.virginia.edu). 
+
+***

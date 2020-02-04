@@ -147,7 +147,7 @@ title = "Data Discovery",
 
 titlePanel(fluidRow(
       column(3, img(width = '60%', height = '20%', src = "BII.jpg")),
-      column(6, "Data Discovery - Skilled Technical Workforce", align = "center"),
+      column(6, "Data Discovery: Skilled Technical Workforce", align = "center"),
       column(3, img(width = '20%', height = '20%', src = "NSF.png", align = "right")
     ))),
 
@@ -158,10 +158,10 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel( "About", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel( "About", includeMarkdown("/home/sm9dv/Measuring-STW-App/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel("Data Sources",
                sidebarPanel(
-                 checkboxGroupInput("show_vars", "Columns in Data Sources to show:", 
+                 checkboxGroupInput("show_vars", "Columns to Show:", 
                                     choiceNames=stri_trim(gsub(names(responses),pattern=("\\.|\\.\\.Yes\\.No\\."),replacement=" "), side = "right"), 
                                     choiceValues = names(responses),
                                     selected=names(responses)), 
@@ -215,7 +215,7 @@ hr(),
                )
              )),  
 
-      tabPanel("Dictionary", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+      tabPanel("Dictionary", includeMarkdown("/home/sm9dv/Measuring-STW-App/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
       tabPanel("Form", DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
