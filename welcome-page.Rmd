@@ -50,3 +50,4 @@ Any additional feedback can be submitted through the <span style="color:#F17E1D;
 The Social and Decision Analytics division (SDAD) is one of three research divisions within the Biocomplexity Institute at the University of Virginia. SDAD combines expertise in statistics and social and behavioral sciences to develop evidence-based research and quantitative methods to inform policy decision-making and evaluation. The researchers at SDAD span many disciplines including statistics, economics, sociology, psychology, political science, policy, health IT, public health, program evaluation, and data science. The SDAD office is located near our nation's capital in Arlington, VA. Learn more about us at [biocomplexity.virginia.edu](biocomplexity.virginia.edu). 
 
 ***
+<span class = "update">Last updated: February 4th, 2020</span>

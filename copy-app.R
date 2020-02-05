@@ -18,6 +18,7 @@ library(shiny)
 library(DT) 
 library(ggplot2)  
 library(stringi)
+library(stringr)
 library(gtools)
 library(vcd)
 library(shinythemes)
@@ -299,16 +300,16 @@ server <- function(input, output, session) {
   output$select_vars <- renderUI({
     req(input$rd)
     if (input$rd == "One Variable") {fluidRow(column(width = 12,
-      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
+      selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
     }
     else if(input$rd == "Two Variables") {fluidRow(column(width = 12, 
-      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
-      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
+      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
+      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
     }
     else if(input$rd == "Three Variables"){fluidRow(column(width = 12, 
-      selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
-      selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
-      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Audience", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
+      selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
+      selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
+      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
     }
   })
   
@@ -316,11 +317,16 @@ server <- function(input, output, session) {
   output$plot <- renderUI({
     req(input$rd)
     if(input$rd=="One Variable") {
-      
+      req(input$category1)
+      if (input$category1=="Credentials"|input$category1=="Jobs"|input$category1=="Employers"|input$category1=="Skills"|input$category1=="Organization Type"
+          | input$category1 == "Gender"|input$category1 == "Race Ethnicity"|input$category1 == "Persons with Disabilities"| input$category1 == "Veterns"|input$category1 == "Active military and their families"|
+          input$category1 == "Persons who live on tribal lands"|input$category1 =="Fields of Study"|  input$category1 =="Types of Employment or Occupations"){
+        
       output$plot1<-renderPlot({
+        req(input$category1)
         ggplot(responses, aes(x =responses[ , input$category1], fill =responses[ , input$category1]))+ 
           scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
-          geom_bar() +
+          geom_bar(width = 0.66) +
           theme_minimal() +
           labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
           theme(
@@ -332,6 +338,38 @@ server <- function(input, output, session) {
             axis.title.y = element_text(size = 18))
       }, height = 600, width = 800)
       plotOutput("plot1")
+      } else {
+      
+        check <- responses %>% select(`Data Source Name`, `Dataset Name`, input$category1)
+      
+        check[[input$category1]] <- trimws(check[[input$category1]])
+
+        check[[input$category1]] <- as.list(str_split(check[[input$category1]], ", "))
+      
+        
+      check <- check %>% unnest(input$category1) %>% group_by(`Data Source Name`, `Dataset Name`)
+
+      check <- as.data.frame(check)
+      
+      output$plot2<-renderPlot({
+        req(input$category1)
+        ggplot(check, aes(x = check[ , input$category1] , fill =check[, input$category1] ))+
+         geom_bar()+
+          geom_bar(width = 0.66) +
+          theme_minimal() +
+          labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+          theme(
+            legend.position = "none", 
+            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+            axis.text.x = element_text(size = 18, angle = 20),
+            axis.text.y = element_text(size = 18), 
+            axis.title.x = element_text(size = 18), 
+            axis.title.y = element_text(size = 18))
+        
+        
+      }, height = 600, width = 1000)
+      plotOutput("plot2")
+      }
     }
     
     
@@ -340,7 +378,7 @@ server <- function(input, output, session) {
       output$plot2<-renderPlot({
         ggplot(responses, aes(x =responses[ , input$category2], fill =responses[ , input$category3]))+ 
           scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
-          geom_bar() +
+          geom_bar(width = .66) +
           theme_minimal() +
           labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
           theme(
