@@ -1,7 +1,7 @@
 
 library(vcd)
 ##### DATA #####
-responses<-read.csv("data-discovery-jan-20.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
+responses<-read.csv("data-discovery-feb-3.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 
 # Assign columns readable names
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
@@ -42,9 +42,20 @@ mosaic(Titanic, labeling_args = list(set_varnames = c(Survived = "Status"),
  mosaic(xtabs(~ Skills + Credentials + Jobs, data = responses  ), data = responses, margin = c(3, 10, 2, 10),
        shade = T,  gp = gpar(fill = c("#72dbc7", "#58a0a6", "#58a0a6", "#3c6a86", "#58a0a6", "#3c6a86", "#3c6a86", "#1b3766")), 
        labeling_args = list(rot_labels = c(0, 0, 90), rot_varnames = c(0, 0, 90) , 
-                            offset_varnames = c(0,2,0, 2)
+                            offset_varnames = c(0,2,0, 2),  grid_legend(x = unit(1.05,'npc'),
+                                                                        y = unit(.45,'npc'),
+                                                                        just = c(0,0),
+                                                                        frame = FALSE,
+                                                                        pch = c(15,15,15, 15),
+                                                                        col = c("#72dbc7", "#58a0a6", "#3c6a86", "#1b3766"),
+                                                                        labels = c("b",'r','g', 'l'))
                         ))
 
-
+ mosaic(xtabs(~ Skills + Credentials + Jobs, data = responses  ), data = responses, margin = c(3, 10, 2, 10),
+        shade = T,  gp = gpar(fill = c("#72dbc7", "#58a0a6", "#58a0a6", "#3c6a86", "#58a0a6", "#3c6a86", "#3c6a86", "#1b3766")), 
+        labeling_args = list(rot_labels = c(0, 0, 90), rot_varnames = c(0, 0, 90) , 
+                             offset_varnames = c(0,2,0, 2),  legend = ( col = c(1, 2, 3), legend = c("red", "blue", "green")
+        )))
+ 
 
 

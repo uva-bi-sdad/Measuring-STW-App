@@ -21,6 +21,8 @@ library(stringi)
 library(stringr)
 library(gtools)
 library(vcd)
+library(tidyr)
+library(dplyr)
 library(shinythemes)
 ##### THEME COLORS #####
 theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D")
@@ -32,6 +34,18 @@ wheel(theme_Palette)
 responses <- read.csv("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-discovery-feb-3.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 responses<-responses[!apply(responses == "", 1, all),] #remove empty rows
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
+
+# Expand Responses for Visualization of Checkbox Group Items #
+expand_responses <- responses
+expand_responses[["Subject"]] <- trimws(expand_responses[["Subject"]])
+expand_responses[["Subject"]] <- as.list(str_split(expand_responses[["Subject"]], ", "))
+expand_responses <- expand_responses %>% unnest("Subject") %>% group_by(`Data Source Name`, `Dataset Name`)
+expand_responses <- as.data.frame(expand_responses)
+
+expand_responses[["Data Type"]] <- trimws(expand_responses[["Data Type"]])
+expand_responses[["Data Type"]] <- as.list(str_split(expand_responses[["Data Type"]], ", "))
+expand_responses <- expand_responses %>% unnest("Data Type") %>% group_by(`Data Source Name`, `Dataset Name`)
+expand_responses <- as.data.frame(expand_responses)
 
 ##### FORM VARIABLES #####
 outputDir <- "form"
@@ -315,84 +329,139 @@ server <- function(input, output, session) {
   
   # This displays the plots
   output$plot <- renderUI({
+    
     req(input$rd)
+
+    
     if(input$rd=="One Variable") {
-      req(input$category1)
-      if (input$category1=="Credentials"|input$category1=="Jobs"|input$category1=="Employers"|input$category1=="Skills"|input$category1=="Organization Type"
+      
+        req(input$category1)
+
+        if (input$category1=="Credentials"|input$category1=="Jobs"|input$category1=="Employers"|input$category1=="Skills"|input$category1=="Organization Type"
           | input$category1 == "Gender"|input$category1 == "Race Ethnicity"|input$category1 == "Persons with Disabilities"| input$category1 == "Veterns"|input$category1 == "Active military and their families"|
           input$category1 == "Persons who live on tribal lands"|input$category1 =="Fields of Study"|  input$category1 =="Types of Employment or Occupations"){
         
-      output$plot1<-renderPlot({
-        req(input$category1)
-        ggplot(responses, aes(x =responses[ , input$category1], fill =responses[ , input$category1]))+ 
-          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
-          geom_bar(width = 0.66) +
-          theme_minimal() +
-          labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
-          theme(
-            legend.position = "none", 
-            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-            axis.text.x = element_text(size = 18),
-            axis.text.y = element_text(size = 18), 
-            axis.title.x = element_text(size = 18), 
-            axis.title.y = element_text(size = 18))
-      }, height = 600, width = 800)
-      plotOutput("plot1")
+        
+            output$plot1<-renderPlot({
+     
+              ggplot(responses, aes(x =responses[ , input$category1], fill =responses[ , input$category1]))+ 
+                scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
+                geom_bar(width = 0.66) +
+                theme_minimal() +
+                labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+                theme(
+                legend.position = "none", 
+                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                axis.text.x = element_text(size = 18),
+                axis.text.y = element_text(size = 18), 
+                axis.title.x = element_text(size = 18), 
+                axis.title.y = element_text(size = 18))
+            }, height = 600, width = 800)
+              plotOutput("plot1")
+      
+        } else {
+        
+            check <- responses %>% select(`Data Source Name`, `Dataset Name`, input$category1)
+            check[[input$category1]] <- trimws(check[[input$category1]])
+            check[[input$category1]] <- as.list(str_split(check[[input$category1]], ", "))
+            check <- check %>% unnest(input$category1) %>% group_by(`Data Source Name`, `Dataset Name`)
+            check <- as.data.frame(check)
+      
+            output$plot2<-renderPlot({
+        
+              ggplot(check, aes(x = check[ , input$category1] , fill =check[, input$category1] ))+
+                geom_bar()+
+                geom_bar(width = 0.66) +
+                theme_minimal() +
+                labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+                theme(
+                legend.position = "none", 
+                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                axis.text.x = element_text(size = 18, angle = 20),
+                axis.text.y = element_text(size = 18), 
+                axis.title.x = element_text(size = 18), 
+                axis.title.y = element_text(size = 18))
+            }, height = 600, width = 1000)
+              plotOutput("plot2")
+        }
+    } else if(input$rd=="Two Variables"){
+      
+    if((input$category2 == "Subject" & input$category3 != "Data Type")|(input$category2 == "Data Type" & input$category3 != "Subject")){
+
+            output$plotb<-renderPlot({ 
+        
+              ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category2)]), ], 
+                     aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category2)]), input$category2], 
+                         fill = expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category2)]), input$category3]))+
+                geom_bar()+
+                geom_bar(width = 0.66) +
+                theme_minimal() +
+                labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+                theme(
+                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                axis.text.x = element_text(size = 18, angle = 30),
+                axis.text.y = element_text(size = 18), 
+                axis.title.x = element_text(size = 18), 
+                axis.title.y = element_text(size = 18))
+            }, height = 600, width = 800)
+              plotOutput("plotb")
+         
+      } else if ((input$category2 != "Subject" & input$category3 == "Data Type")|(input$category2 != "Data Type" & input$category3 == "Subject")){
+        
+            output$plota<-renderPlot({ 
+              
+              ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category3)]), ], 
+                     aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category3)]), input$category2], 
+                     fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category3)]), input$category3]))+
+                geom_bar()+
+                geom_bar(width = 0.66) +
+                theme_minimal() +
+                labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+                theme(
+                  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                  axis.text.x = element_text(size = 18, angle = 30),
+                  axis.text.y = element_text(size = 18), 
+                  axis.title.x = element_text(size = 18), 
+                  axis.title.y = element_text(size = 18))
+              }, height = 600, width = 800)
+                plotOutput("plota")
+      } else if ((input$category2 == "Subject" & input$category3 == "Data Type")|(input$category2 == "Data Type" & input$category3 == "Subject")){
+          
+            
+            output$plotc<-renderPlot({
+              
+              ggplot(expand_responses, aes(x =expand_responses[ , input$category2], fill =expand_responses[ , input$category3]))+ 
+                geom_bar(width = .66) +
+                theme_minimal() +
+                labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
+                theme(
+                  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                  axis.text.x = element_text(size = 18, angle = 30),
+                  axis.text.y = element_text(size = 18), 
+                  axis.title.x = element_text(size = 18), 
+                  axis.title.y = element_text(size = 18))
+            }, height = 600, width = 800)
+              plotOutput("plotc")
       } else {
       
-        check <- responses %>% select(`Data Source Name`, `Dataset Name`, input$category1)
-      
-        check[[input$category1]] <- trimws(check[[input$category1]])
-
-        check[[input$category1]] <- as.list(str_split(check[[input$category1]], ", "))
-      
-        
-      check <- check %>% unnest(input$category1) %>% group_by(`Data Source Name`, `Dataset Name`)
-
-      check <- as.data.frame(check)
-      
-      output$plot2<-renderPlot({
-        req(input$category1)
-        ggplot(check, aes(x = check[ , input$category1] , fill =check[, input$category1] ))+
-         geom_bar()+
-          geom_bar(width = 0.66) +
-          theme_minimal() +
-          labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
-          theme(
-            legend.position = "none", 
-            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-            axis.text.x = element_text(size = 18, angle = 20),
-            axis.text.y = element_text(size = 18), 
-            axis.title.x = element_text(size = 18), 
-            axis.title.y = element_text(size = 18))
-        
-        
-      }, height = 600, width = 1000)
-      plotOutput("plot2")
-      }
-    }
-    
-    
-    else if(input$rd=="Two Variables"){
-      
-      output$plot2<-renderPlot({
-        ggplot(responses, aes(x =responses[ , input$category2], fill =responses[ , input$category3]))+ 
-          scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
-          geom_bar(width = .66) +
-          theme_minimal() +
-          labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
-          theme(
-            plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-            axis.text.x = element_text(size = 18),
-            axis.text.y = element_text(size = 18), 
-            axis.title.x = element_text(size = 18), 
-            axis.title.y = element_text(size = 18))
-      }, height = 600, width = 800)
-      plotOutput("plot2")
-    }
-    
-    else if(input$rd=="Three Variables"){
-      output$plot3<-renderPlot({
+            output$plot3<-renderPlot({
+              
+              ggplot(responses, aes(x =responses[ , input$category2], fill =responses[ , input$category3]))+ 
+                scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
+                geom_bar(width = .66) +
+                theme_minimal() +
+                labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
+                theme(
+                  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                  axis.text.x = element_text(size = 18),
+                  axis.text.y = element_text(size = 18), 
+                  axis.title.x = element_text(size = 18), 
+                  axis.title.y = element_text(size = 18))
+            }, height = 600, width = 800)
+              plotOutput("plot3")
+        }
+    } else if(input$rd=="Three Variables"){
+      output$plot4<-renderPlot({
         
         
         var1  <- responses[ , input$category4]
@@ -404,10 +473,10 @@ server <- function(input, output, session) {
                shade = T,  gp = gpar(fill = c("#72dbc7", "#58a0a6", "#58a0a6", "#3c6a86", "#58a0a6", "#3c6a86", "#3c6a86", "#1b3766")), 
                main = paste("Data Containing ", input$category4, ", ", input$category5, ", and ", input$category6, sep = ""),
                labeling_args = list(set_varnames = c(var1 = input$category4, var2 = input$category5, var3 = input$category6), 
-                                    rot_labels = c(0, 0, 90)  , offset_varnames = c(0,1,0, 1)
-               ))
+                                    rot_labels = c(0, 0, 90), offset_varnames = c(0,1,0, 1)
+                                    ))
       }, height = 600, width = 800)
-      plotOutput("plot3")
+      plotOutput("plot4")
     }
 
   })

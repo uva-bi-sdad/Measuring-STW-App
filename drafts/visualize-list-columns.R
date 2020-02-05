@@ -51,24 +51,136 @@ ggplot(test2, aes(x =test2$Skills..Yes.No., fill = test2$Data.Type))+
 
 
 
-check <- responses
-
-check <- responses %>% select(`Data Source Name`, `Dataset Name`, Subject)
-
-check[["Subject"]] <- trimws(check[["Subject"]])
-
-`$`(check, "Subject") <- as.list(str_split(`$`(check, "Subject"), ", "))
+check <- responses %>% select(`Data Source Name`, `Dataset Name`, input$category1)
+check[[input$category1]] <- trimws(check[[input$category1]])
+check[[input$category1]] <- as.list(str_split(check[[input$category1]], ", "))
+check <- check %>% unnest(input$category1) %>% group_by(`Data Source Name`, `Dataset Name`)
+check <- as.data.frame(check)
 
 
-check <- check %>% unnest("Subject") %>% group_by(`Data Source Name`, `Dataset Name`)
+  ggplot(check, aes(x = check[ , input$category1] , fill =check[, input$category1] ))+
+    geom_bar()+
+    geom_bar(width = 0.66) +
+    theme_minimal() +
+    labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+    theme(
+      legend.position = "none", 
+      plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+      axis.text.x = element_text(size = 18, angle = 20),
+      axis.text.y = element_text(size = 18), 
+      axis.title.x = element_text(size = 18), 
+      axis.title.y = element_text(size = 18))
+  
+  
+  
+  
+  # graph subject and jobs
+  
+  
+check2 <- responses %>% select(`Data Source Name`, `Dataset Name`, `Data Type`, Jobs)
+check2[["Data Type"]] <- trimws(check2[["Data Type"]])
+check2[["Data Type"]] <- as.list(str_split(check2[["Data Type"]], ", "))
+check2 <- check2 %>% unnest("Data Type") %>% group_by(`Data Source Name`, `Dataset Name`)
+check2 <- as.data.frame(check2)
+  
+ggplot(check2, aes(x = check2[ , "Subject"] , fill =check2[, "Jobs"] ))+
+  geom_bar()+
+  geom_bar(width = 0.66) +
+  theme_minimal() +
+  #labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+  theme(
+    #legend.position = "none", 
+    plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+    axis.text.x = element_text(size = 18, angle = 20),
+    axis.text.y = element_text(size = 18), 
+    axis.title.x = element_text(size = 18), 
+    axis.title.y = element_text(size = 18))
+
+
+ggplot(check2, aes(x = check2[ , "Jobs"] , fill =check2[, "Subject"] ))+
+  geom_bar()+
+  geom_bar(width = 0.66) +
+  theme_minimal() +
+  #labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+  theme(
+    #legend.position = "none", 
+    plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+    axis.text.x = element_text(size = 18, angle = 20),
+    axis.text.y = element_text(size = 18), 
+    axis.title.x = element_text(size = 18), 
+    axis.title.y = element_text(size = 18))
+
+#Subject and Data Type
+
+
+expand_responses <- responses
+expand_responses[["Subject"]] <- trimws(expand_responses[["Subject"]])
+expand_responses[["Subject"]] <- as.list(str_split(expand_responses[["Subject"]], ", "))
+expand_responses <- expand_responses %>% unnest("Subject") %>% group_by(`Data Source Name`, `Dataset Name`)
+expand_responses <- as.data.frame(expand_responses)
+
+expand_responses[["Data Type"]] <- trimws(expand_responses[["Data Type"]])
+expand_responses[["Data Type"]] <- as.list(str_split(expand_responses[["Data Type"]], ", "))
+expand_responses <- expand_responses %>% unnest("Data Type") %>% group_by(`Data Source Name`, `Dataset Name`)
+expand_responses <- as.data.frame(expand_responses)
 
 
 
-ggplot(check, aes(x = check[ , "Subject"] , fill = check[ , "Subject"] ))+
-  geom_bar()
+
+check3 <- responses %>% select(`Data Source Name`, `Dataset Name`, Subject, `Data Type`)
+check3[["Subject"]] <- trimws(check3[["Subject"]])
+check3[["Subject"]] <- as.list(str_split(check3[["Subject"]], ", "))
+check3 <- check3 %>% unnest("Subject") %>% group_by(`Data Source Name`, `Dataset Name`)
+check3 <- as.data.frame(check3)
+
+check3[["Data Type"]] <- trimws(check3[["Data Type"]])
+check3[["Data Type"]] <- as.list(str_split(check3[["Data Type"]], ", "))
+check3 <- check3 %>% unnest("Data Type") %>% group_by(`Data Source Name`, `Dataset Name`)
+check3 <- as.data.frame(check3)
 
 
 
+ggplot(check3, aes(x = check3[ , "Subject"] , fill =check3[, "Data Type"] ))+
+  geom_bar()+
+  geom_bar(width = 0.66) +
+  theme_minimal() +
+  #labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+  theme(
+    #legend.position = "none", 
+    plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+    axis.text.x = element_text(size = 18, angle = 20),
+    axis.text.y = element_text(size = 18), 
+    axis.title.x = element_text(size = 18), 
+    axis.title.y = element_text(size = 18))
+
+ggplot(check3, aes(x = check3[ , "Data Type"] , fill =check3[, "Subject"] ))+
+  geom_bar()+
+  geom_bar(width = 0.66) +
+  theme_minimal() +
+  #labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+  theme(
+    #legend.position = "none", 
+    plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+    axis.text.x = element_text(size = 18, angle = 20),
+    axis.text.y = element_text(size = 18), 
+    axis.title.x = element_text(size = 18), 
+    axis.title.y = element_text(size = 18))
+
+
+ggplot(expand_responses[!duplicated(expand_responses[ ,c('Dataset Name', "Subject")]),], 
+       aes(x = expand_responses[!duplicated(expand_responses[ ,c('Dataset Name', "Subject")]), "Subject"], 
+           fill = expand_responses[!duplicated(expand_responses[ ,c('Dataset Name', "Subject")]),"Jobs"]))+
+  geom_bar()+
+  geom_bar(width = 0.66) +
+  theme_minimal() +
+  #labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
+  theme(
+    #legend.position = "none", 
+    plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+    axis.text.x = element_text(size = 18, angle = 20),
+    axis.text.y = element_text(size = 18), 
+    axis.title.x = element_text(size = 18), 
+    axis.title.y = element_text(size = 18))
 
 
 
