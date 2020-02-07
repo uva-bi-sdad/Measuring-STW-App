@@ -15,7 +15,7 @@ This application was created by the Social and Decision Analytics Division of th
 
 A job in the Skill Technical Workforce (STW) requires 
 
-<span class = "test"> 1. </span> a high level of knowledge in a technical domain; but
+<span class = "test";> 1. </span> a high level of knowledge in a technical domain; but
 
 <span class = "test"> 2. </span> does not require a bachelor's degree for entry.
 <br>   </br>
@@ -34,7 +34,7 @@ There are numerous data gaps in describing the STW. They include:
 ***
 
 ### Instructions
-A data table with information about each data source is included on the <span style="color:#F17E1D; font-weight: bold">Data Sources</span> tab. You may filter the variables displayed in the data table by checking the boxes on the left-hand side.
+A data table with information about each data source is included on the <span style="color:#F17E1D; font-weight: bold">Data Sources</span> tab. You may filter the variables displayed in the data table by checking the boxes on the left-hand side. You may also search within columns using the search bars directly below the column name, or search the entire data sheet by using the search bar at the top of the tab.
 
 Variables may be selected on the <span style="color:#F17E1D; font-weight: bold">Plot</span> tab to display charts describing various categorical variables from the data sources table. 
 

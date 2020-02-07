@@ -183,4 +183,74 @@ ggplot(expand_responses[!duplicated(expand_responses[ ,c('Dataset Name', "Subjec
     axis.title.y = element_text(size = 18))
 
 
+############ three var visualization
+
+
+##### job, credentials, Skills, employers
+
+#{2,2,2} 
+#if length(unique(test$[[inputcategory4]]))==2 
+#length(unique(test$[[inputcategory5]]))==2) & length(unique(test$[[inputcategory6]]))==2)
+
+#{2,2,4} {2,3,4} {3,2,4}{3,3,4}{4,2,2}{2,4,2}{4,2,3}  {4,3,2} {4,3,3} {3,4,2} {3,4,3} {2,4,3} 
+if (input$category4== "Data Type" & input$category5 != "Subject" & input$category6 != "Subject")|
+  (input$category5== "Data Type" & input$category4 != "Subject" & input$category6 != "Subject") | 
+  (input$category6== "Data Type" & input$category5 != "Subject" & input$category4 != "Subject") |
+  (input$category4== "Subject" & input$category5 != "Data Type" & input$category4 != "Data Type") |
+  (input$category5== "Subject"& input$category5 != "Data Type" & input$category4 != "Data Type") | 
+  (input$category6== "Subject" & input$category5 != "Data Type" & input$category4 != "Data Type") )
+
+
+
+
+
+
+
+
+ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject")]),], aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject")]), "Subject"], fill = expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject")]), "Data Type"]))+
+  geom_bar()+
+  facet_grid(~expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject")]), "Jobs"])
+
+
+
+
+
+
+
+#   {4,4,2} 
+#{4,4,3} 
+
+#{2,4,4} 
+#{3,4,4} 
+#{4,2,4} {4,3,4} 
+#{4,4,4}
+
+
+
+
+
+
+
+#{2,2,3}  {2,3,2}  {3,2,2} 
+
+#{2,3,3}   
+# {3,2,3}  {3,3,2} {3,3,3} 
+
+
+#mosaic plot
+
+
+#MOSAIC PLOT
+
+#subject, data type 
+#facets
+
+
+### cats 
+#
+
+
+
+
+
 
