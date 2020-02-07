@@ -214,9 +214,20 @@ ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject
 
 
 
-
-
-
+(input$category4== "Data Type" & input$category5 != "Subject")|
+  (input$category4== "Data Type" & input$category5 != "Data Type")|
+    (input$category4== "Subject" & input$category5 != "Data Type")|
+      (input$category4== "Subject" & input$category5 != "Subject")|
+        (input$category5== "Data Type" & input$category6 != "Subject")|
+          (input$category5== "Data Type" & input$category6 != "Data Type")|
+            (input$category5== "Subject" & input$category6 != "Data Type")|
+              (input$category5== "Subject" & input$category6 != "Subject")|
+                (input$category6== "Data Type" & input$category4 != "Subject")|
+                  (input$category6== "Data Type" & input$category4 != "Data Type")|
+                    (input$category6== "Subject" & input$category4 != "Data Type")|
+                      (input$category6== "Subject" & input$category4 != "Subject")
+  
+  
 #   {4,4,2} 
 #{4,4,3} 
 
