@@ -24,6 +24,8 @@ library(vcd)
 library(tidyr)
 library(dplyr)
 library(shinythemes)
+
+
 ##### THEME COLORS #####
 theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D", "#FDDA24", "#EF3F6B","#25CAD3","#009FDF","#FDBC00", "#62BB46")
 wheel <- function(col, radius = 1, ...)
@@ -164,8 +166,8 @@ title = "Data Discovery",
 titlePanel(fluidRow(
       column(3, img(width = '60%', height = '20%', src = "BII.jpg")),
       column(6, "Data Discovery: Skilled Technical Workforce", align = "center"),
-      column(3, img(width = '20%', height = '20%', src = "NSF.png", align = "right")
-    ))),
+      column(3, img(src='NCSES-full-color.pdf'))
+    )),
 
 
 
@@ -174,7 +176,7 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel( "About", includeMarkdown("/home/sm9dv/Measuring-STW-App/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel( "About", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel("Data Sources",
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns to Show:", 
@@ -231,7 +233,7 @@ hr(),
                )
              )),  
 
-      tabPanel("Dictionary", includeMarkdown("/home/sm9dv/Measuring-STW-App/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+      tabPanel("Dictionary", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
       tabPanel("Form", DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
