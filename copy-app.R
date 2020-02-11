@@ -164,9 +164,9 @@ title = "Data Discovery",
 # https://stackoverflow.com/questions/56407601/how-to-fix-the-position-of-main-panel-in-r-shiny this almost fixes the title Panel
 
 titlePanel(fluidRow(
-      column(3, img(width = '60%', height = '20%', src = "BII.jpg")),
+      column(3, img(width = '100%', height = '50%', src = "BII.jpg", align = 'left',  `vertical-align`="middle")),
       column(6, "Data Discovery: Skilled Technical Workforce", align = "center"),
-      column(3, img(src='NCSES-full-color.pdf'))
+      column(3, img(width = '100%', height = '20%', src='nsf-ncses.png', align = 'right'))
     )),
 
 
@@ -347,13 +347,13 @@ server <- function(input, output, session) {
                               fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category1)]), input$category1]))+
               geom_bar()+
               geom_bar(width = 0.66) +
-              scale_discrete_manual(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
-                                    theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8])+
+              scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                    theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10], theme_Palette[11])) +
               theme_minimal() +
               labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
               theme(
                 legend.position = "none", 
-                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
                 axis.text.x = element_text(size = 18, angle = 20),
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
@@ -376,7 +376,7 @@ server <- function(input, output, session) {
               labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
               theme(
                 legend.position = "none", 
-                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
                 axis.text.x = element_text(size = 18),
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
@@ -397,14 +397,19 @@ server <- function(input, output, session) {
                 geom_bar()+
                 geom_bar(width = 0.66) +
                 theme_minimal() +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[5], theme_Palette[2], theme_Palette[4], theme_Palette[3])) +
                 labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
                 theme(
-                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-                axis.text.x = element_text(size = 18, angle = 30),
+                  legend.position = c(.95, .95),
+                  legend.justification = c("right", "top"),
+                  legend.box.just = "right",
+                  legend.margin = margin(6, 6, 6, 6),
+                plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+                axis.text.x = element_text(size = 18, angle = 20),
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
                 axis.title.y = element_text(size = 18))
-            }, height = 600, width = 800)
+            }, width= 600, height= 800)
               plotOutput("plotb")
          
       } else if ((input$category2 != "Subject" & input$category3 == "Data Type")|(input$category2 != "Data Type" & input$category3 == "Subject")){
@@ -416,11 +421,14 @@ server <- function(input, output, session) {
                      fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category3)]), input$category3]))+
                 geom_bar()+
                 geom_bar(width = 0.66) +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                            theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10], theme_Palette[11])) +
                 theme_minimal() +
                 labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
                 theme(
-                  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-                  axis.text.x = element_text(size = 18, angle = 30),
+                  legend.position = "bottom",
+                  plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+                  axis.text.x = element_text(size = 18),
                   axis.text.y = element_text(size = 18), 
                   axis.title.x = element_text(size = 18), 
                   axis.title.y = element_text(size = 18))
@@ -434,6 +442,8 @@ server <- function(input, output, session) {
               ggplot(expand_responses, aes(x =expand_responses[ , input$category2], fill =expand_responses[ , input$category3]))+ 
                 geom_bar(width = .66) +
                 theme_minimal() +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                            theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10], theme_Palette[11])) +
                 labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
                 theme(
                   plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
