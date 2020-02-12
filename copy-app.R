@@ -27,14 +27,15 @@ library(shinythemes)
 
 
 ##### THEME COLORS #####
-theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D", "#FDDA24", "#EF3F6B","#25CAD3","#009FDF","#FDBC00", "#62BB46")
+theme_Palette<-c("#1B3766", "#02ABD6", "#6DD4DB", "#A9D5A5", "#F17E1D", "#FDDA24", "#EF3F6B","#25CAD3","#FDBC00", "#62BB46")
 wheel <- function(col, radius = 1, ...)
   pie(rep(1, length(col)), col=col, radius=radius)
 wheel(theme_Palette)
 
 ##### DATA #####
-#responses <- read.csv("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-discovery-feb-3.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
+
 responses <- read.csv("data-discovery-feb-3.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
+
 responses<-responses[!apply(responses == "", 1, all),] #remove empty rows
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
 
@@ -164,10 +165,10 @@ title = "Data Discovery",
 
 # https://stackoverflow.com/questions/56407601/how-to-fix-the-position-of-main-panel-in-r-shiny this almost fixes the title Panel
 
-titlePanel(fluidRow(
-      column(3, img(width = '60%', height = '20%', src = "BII.jpg")),
-      column(6, "Data Discovery: Skilled Technical Workforce", align = "center"),
-      column(3, img(src='NCSES-full-color.pdf'))
+h2(fluidRow(
+      column(3, img(width = '70%', height = '30%', src = "BII.jpg", align = 'left')),
+      column(6, class = "center","Data Discovery: Skilled Technical Workforce"),
+      column(3, img(width = '50%', height = '20%', src='nsf-ncses.png', align = 'right'))
     )),
 
 
@@ -177,8 +178,8 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel( "About", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
-      tabPanel("Data Sources",
+      tabPanel( h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel(h4("Data Sources"),
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns to Show:", 
                                     choiceNames=names(responses), 
@@ -225,7 +226,7 @@ hr(),
                      radioTooltip(id = "show_vars", choice = "Types of Employment or Occupations", title = "Indicates if information on employment or occupations is included in the dataset.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Notes", title = "Any additional information relevant to the data source.", placement = "right", trigger = "hover"),
                 mainPanel( DT::dataTableOutput("mytable1"), width = 10)), 
-      tabPanel( "Plot", 
+      tabPanel( h4("Plot"), 
              fluidRow(
                column(2, uiOutput("filter_vars"),
                       uiOutput("select_vars")
@@ -234,8 +235,8 @@ hr(),
                )
              )),  
 
-      tabPanel("Dictionary", includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
-      tabPanel("Form", DT::dataTableOutput("form"), tags$hr(),
+      tabPanel(h4("Dictionary"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+      tabPanel(h4("Form"), DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
                                 textInput("Data Source Name", "Data Source Name", ""),
@@ -284,7 +285,7 @@ hr(),
                                 radioButtons("Types of Employment/Occupations", "Types of Employment/Occupations", choices = list("Yes", "No")))),
                textAreaInput("Notes", "Notes", ""),
                actionButton("submit", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;")), 
-      tabPanel("Contact", 
+      tabPanel(h4("Contact"), 
                textInput("Name.feedback", "Name", ""), textInput("Email.feedback", "Email", ""), 
                textAreaInput("Comment.feedback", "Comment", ""),
                actionButton("submit.feedback", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;"))
@@ -348,13 +349,13 @@ server <- function(input, output, session) {
                               fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category1)]), input$category1]))+
               geom_bar()+
               geom_bar(width = 0.66) +
-              scale_discrete_manual(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
-                                    theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8])+
+              scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                    theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
               theme_minimal() +
               labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
               theme(
                 legend.position = "none", 
-                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
                 axis.text.x = element_text(size = 18, angle = 20),
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
@@ -377,7 +378,7 @@ server <- function(input, output, session) {
               labs(title = paste("Data Sources Containing", input$category1), y = "Number of Sources", x = "") +
               theme(
                 legend.position = "none", 
-                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
+                plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
                 axis.text.x = element_text(size = 18),
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
@@ -398,14 +399,19 @@ server <- function(input, output, session) {
                 geom_bar()+
                 geom_bar(width = 0.66) +
                 theme_minimal() +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[5], theme_Palette[2], theme_Palette[4], theme_Palette[3])) +
                 labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
                 theme(
-                plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-                axis.text.x = element_text(size = 18, angle = 30),
+                  legend.position = c(.95, .95),
+                  legend.justification = c("right", "top"),
+                  legend.box.just = "right",
+                  legend.margin = margin(6, 6, 6, 6),
+                plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+                axis.text.x = element_text(size = 18, angle = 20),
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
                 axis.title.y = element_text(size = 18))
-            }, height = 600, width = 800)
+            }, width= 800, height= 600)
               plotOutput("plotb")
          
       } else if ((input$category2 != "Subject" & input$category3 == "Data Type")|(input$category2 != "Data Type" & input$category3 == "Subject")){
@@ -417,11 +423,14 @@ server <- function(input, output, session) {
                      fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category3)]), input$category3]))+
                 geom_bar()+
                 geom_bar(width = 0.66) +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                            theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
                 theme_minimal() +
                 labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
                 theme(
-                  plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-                  axis.text.x = element_text(size = 18, angle = 30),
+                  legend.position = "bottom",
+                  plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+                  axis.text.x = element_text(size = 18),
                   axis.text.y = element_text(size = 18), 
                   axis.title.x = element_text(size = 18), 
                   axis.title.y = element_text(size = 18))
@@ -435,10 +444,12 @@ server <- function(input, output, session) {
               ggplot(expand_responses, aes(x =expand_responses[ , input$category2], fill =expand_responses[ , input$category3]))+ 
                 geom_bar(width = .66) +
                 theme_minimal() +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                            theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
                 labs(title = paste("Data Sources Containing", input$category3, "Data by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3) ) +
                 theme(
                   plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-                  axis.text.x = element_text(size = 18, angle = 30),
+                  axis.text.x = element_text(size = 18, angle = 20),
                   axis.text.y = element_text(size = 18), 
                   axis.title.x = element_text(size = 18), 
                   axis.title.y = element_text(size = 18))
@@ -476,13 +487,14 @@ server <- function(input, output, session) {
     
     
                   mosaic(xtabs(~ var1 + var2 + var3  ), data = responses, margin = c(3, 10, 2, 10),
-                           shade = T,  gp = gpar(fill = c("#72dbc7", "#58a0a6", "#58a0a6", "#3c6a86", "#58a0a6", "#3c6a86", "#3c6a86", "#1b3766")), 
+                           shade = T,  gp = gpar(fill = c(theme_Palette[1], theme_Palette[2], theme_Palette[2], theme_Palette[9], theme_Palette[2], theme_Palette[9], theme_Palette[9], theme_Palette[5])), 
                            main = paste("Data Containing ", input$category4, ", ", input$category5, ", and ", input$category6, sep = ""),
                            labeling_args = list(set_varnames = c(var1 = input$category4, var2 = input$category5, var3 = input$category6), 
                                                 rot_labels = c(0, 0, 90), offset_varnames = c(0,1,0, 1)
                            ))
           }, height = 600, width = 800)
             plotOutput("plot4")
+            
           } else if((input$category4== "Data Type" & input$category5 != "Subject" & input$category6 != "Subject")|
                     (input$category4== "Subject" & input$category5 != "Data Type" & input$category6 != "Data Type")){
                       
@@ -491,18 +503,23 @@ server <- function(input, output, session) {
               ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category4)]), ], 
                      aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category4)]), input$category5], 
                          fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category4)]), input$category6]))+
+                scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
                 geom_bar()+
                 facet_grid(~expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category4)]), input$category4])+
                 geom_bar(width = 0.66) +
                 theme_minimal() +
-                labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+                labs(title = paste("Data Sources Containing", input$category6, "by", input$category5, "and", input$category4), y = "Number of Sources", x = paste(input$category5), fill = paste(input$category6)) +
                 theme(
+                  legend.position = c(.95, .95),
+                  legend.justification = c("right", "top"),
+                  legend.box.just = "right",
+                  legend.margin = margin(6, 6, 6, 6),
                   plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
                   axis.text.x = element_text(size = 18, angle = 30),
                   axis.text.y = element_text(size = 18), 
                   axis.title.x = element_text(size = 18), 
                   axis.title.y = element_text(size = 18))
-            }, height = 600, width = 800)
+            }, height = 600, width = 1000)
             plotOutput("plotd")   
                       
                     
@@ -518,15 +535,20 @@ server <- function(input, output, session) {
                 geom_bar()+
                 facet_grid(~expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category5)]), input$category5])+
                 geom_bar(width = 0.66) +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[5], theme_Palette[2], theme_Palette[4], theme_Palette[3])) +
                 theme_minimal() +
-                labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+                labs(title = paste("Data Sources Containing", input$category4, "by", input$category5, "and", input$category6), y = "Number of Sources", x = paste(input$category6), fill = paste(input$category4)) +
                 theme(
+                  legend.position = c(.95, .95),
+                  legend.justification = c("right", "top"),
+                  legend.box.just = "right",
+                  legend.margin = margin(6, 6, 6, 6),
                   plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
                   axis.text.x = element_text(size = 18, angle = 30),
                   axis.text.y = element_text(size = 18), 
                   axis.title.x = element_text(size = 18), 
                   axis.title.y = element_text(size = 18))
-            }, height = 600, width = 800)
+            }, height = 600, width = 1000)
             plotOutput("plote")  
             
             
@@ -540,18 +562,23 @@ server <- function(input, output, session) {
               ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category6)]), ], 
                      aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category6)]), input$category4], 
                          fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category6)]), input$category5]))+
+                scale_fill_manual(values = c(theme_Palette[1], theme_Palette[5], theme_Palette[4], theme_Palette[2]))+
                 geom_bar()+
                 facet_grid(~expand_responses[!duplicated(expand_responses[,c('Dataset Name', input$category6)]), input$category6])+
                 geom_bar(width = 0.66) +
                 theme_minimal() +
-                labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+                labs(title = paste("Data Sources Containing", input$category5, "by", input$category4, "and", input$category6), y = "Number of Sources", x = paste(input$category4), fill = paste(input$category5)) +
                 theme(
+                  legend.position = c(.95, .95),
+                  legend.justification = c("right", "top"),
+                  legend.box.just = "right",
+                  legend.margin = margin(6, 6, 6, 6),
                   plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
                   axis.text.x = element_text(size = 18, angle = 30),
                   axis.text.y = element_text(size = 18), 
                   axis.title.x = element_text(size = 18), 
                   axis.title.y = element_text(size = 18))
-            }, height = 600, width = 800)
+            }, height = 600, width = 1000)
             plotOutput("plote") 
             
             
@@ -580,18 +607,24 @@ server <- function(input, output, session) {
                      aes(x = expand_responses[ , input$category4], 
                          fill =expand_responses[, input$category5]))+
                 geom_bar()+
-                facet_grid(~expand_responses[, input$category6])+
+                facet_grid(~expand_responses[, input$category6]) +
                 geom_bar(width = 0.66) +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                            theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
                 theme_minimal() +
-                labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+                labs(title = paste("Data Sources Containing", input$category5, "by", input$category4, "and", input$category6), y = "Number of Sources", x = paste(input$category4), fill = paste(input$category5)) +
                 theme(
+                  strip.text.x = element_text(size = 16),
+                  legend.position = c(.95, .95),
+                  legend.justification = c("right", "top"),
+                  legend.box.just = "right",
+                  legend.margin = margin(6, 6, 6, 6),
                   plot.title = element_text(hjust = 0.5, size = 20, face = "bold"),
-                  axis.text.x = element_text(size = 16, angle = 30),
+                  axis.text.x = element_text(size = 16, angle = 20),
                   axis.text.y = element_text(size = 16), 
                   axis.title.x = element_text(size = 18), 
-                  axis.title.y = element_text(size = 18),
-                  legend.position = "bottom")
-            }, height = 800, width = 1000)
+                  axis.title.y = element_text(size = 18))
+            }, height = 600, width = 1000)
             plotOutput("plotf") 
             
           } else{
