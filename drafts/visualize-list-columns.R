@@ -261,7 +261,22 @@ ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject
 #
 
 
-
+ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category3)]), ], 
+       aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category3)]), input$category2], 
+           fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category3)]), input$category3]))+
+  geom_bar()+
+  geom_bar(width = 0.66) +
+  scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                              theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
+  theme_minimal() +
+  labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
+  theme(
+    legend.position = "bottom",
+    plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
+    axis.text.x = element_text(size = 18),
+    axis.text.y = element_text(size = 18), 
+    axis.title.x = element_text(size = 18), 
+    axis.title.y = element_text(size = 18))
 
 
 
