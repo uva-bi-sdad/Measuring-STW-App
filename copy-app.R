@@ -383,7 +383,7 @@ server <- function(input, output, session) {
                         legend.margin = margin(6, 6, 6, 6),
                         plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
                         axis.text.x = element_text(size = 18,
-                                             angle = ifelse(input$category1 == "Subject"|input$category1 == "Data Type", 20, 0)),
+                                             angle = ifelse(input$category2== "Subject"|input$category2 == "Data Type", 20, 0)),
                         axis.text.y = element_text(size = 18), 
                         axis.title.x = element_text(size = 18), 
                         axis.title.y = element_text(size = 18))
