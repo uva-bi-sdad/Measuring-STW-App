@@ -261,15 +261,114 @@ ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', "Subject
 #
 
 
-ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category3)]), ], 
-       aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category3)]), input$category2], 
-           fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category3)]), input$category3]))+
-  geom_bar()+
+
+
+input4 <- "Subject"
+input5 <- "Data Type"
+input6 <- "Credentials"
+
+
+ggplot(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), ], 
+       aes(x = expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), 
+                                if((input$category4== "Data Type" & input$category5 != "Subject" & input$category6 != "Subject")|
+                                   (input$category4== "Subject" & input$category5 != "Data Type" & input$category6 != "Data Type")){
+                                  input$category5
+                                
+                                  } else if((input$category5== "Data Type" & input$category4 != "Subject" & input$category6 != "Subject") |
+                                         (input$category5== "Subject"& input$category4 != "Data Type" & input$category6 != "Data Type")){
+                                  input$category6
+                                  } else if ((input$category6== "Data Type" & input$category5 != "Subject" & input$category4 != "Subject") |
+                                  (input$category6== "Subject" & input$category5 != "Data Type" & input$category4 != "Data Type")){
+                                  input$category4
+                                  } else if((input$category4== "Data Type" & input$category5 == "Subject")|
+                                            (input$category4== "Data Type" & input$category5 == "Data Type")|
+                                            (input$category4== "Subject" & input$category5 == "Data Type")|
+                                            (input$category4== "Subject" & input$category5 == "Subject")){
+                                  input$category6
+                                } else if((input$category5== "Data Type" & input$category6 == "Subject")|
+                                          (input$category5== "Data Type" & input$category6 == "Data Type")|
+                                          (input$category5== "Subject" & input$category6 == "Data Type")|
+                                          (input$category5== "Subject" & input$category6 == "Subject")){
+                                  input$category4
+                                } else if( (input$category6== "Data Type" & input$category4 == "Subject")|
+                                           (input$category6== "Data Type" & input$category4 == "Data Type")|
+                                           (input$category6== "Subject" & input$category4 == "Data Type")|
+                                           (input$category6== "Subject" & input$category4 == "Subject")){
+                                  input$category5
+                                } else{
+                                  input$category4
+                                }
+                                ], 
+           
+           
+           fill =expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), 
+                                  if((input$category4== "Data Type" & input$category5 != "Subject" & input$category6 != "Subject")|
+                                     (input$category4== "Subject" & input$category5 != "Data Type" & input$category6 != "Data Type")){
+                                    input$category6
+                                  }else if((input$category5== "Data Type" & input$category4 != "Subject" & input$category6 != "Subject") |
+                                           (input$category5== "Subject"& input$category4 != "Data Type" & input$category6 != "Data Type")){
+                                    input$category4
+                                  }else if ((input$category6== "Data Type" & input$category5 != "Subject" & input$category4 != "Subject") |
+                                            (input$category6== "Subject" & input$category5 != "Data Type" & input$category4 != "Data Type")){
+                                    input$category5
+                                  } else if((input$category4== "Data Type" & input$category5 == "Subject")|
+                                            (input$category4== "Data Type" & input$category5 == "Data Type")|
+                                            (input$category4== "Subject" & input$category5 == "Data Type")|
+                                            (input$category4== "Subject" & input$category5 == "Subject")){
+                                    input$category4
+                                  }else if((input$category5== "Data Type" & input$category6 == "Subject")|
+                                           (input$category5== "Data Type" & input$category6 == "Data Type")|
+                                           (input$category5== "Subject" & input$category6 == "Data Type")|
+                                           (input$category5== "Subject" & input$category6 == "Subject")){
+                                  input$category5
+                                  }else if( (input$category6== "Data Type" & input$category4 == "Subject")|
+                                            (input$category6== "Data Type" & input$category4 == "Data Type")|
+                                            (input$category6== "Subject" & input$category4 == "Data Type")|
+                                            (input$category6== "Subject" & input$category4 == "Subject")){
+                                    input$category6
+                                  } else{
+                                    input$category5
+                                  }
+                                  
+                                  
+                                  ]))+
+  
+  
+  facet_grid(~expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), 
+                               
+                               if((input$category4== "Data Type" & input$category5 != "Subject" & input$category6 != "Subject")|
+                                  (input$category4== "Subject" & input$category5 != "Data Type" & input$category6 != "Data Type")){
+                                 input$category4
+                               }else if((input$category5== "Data Type" & input$category4 != "Subject" & input$category6 != "Subject") |
+                                        (input$category5== "Subject"& input$category4 != "Data Type" & input$category6 != "Data Type")){
+                                 input$category5
+                               }else if ((input$category6== "Data Type" & input$category5 != "Subject" & input$category4 != "Subject") |
+                                         (input$category6== "Subject" & input$category5 != "Data Type" & input$category4 != "Data Type")){
+                                input$category6 
+                               } else if((input$category4== "Data Type" & input$category5 == "Subject")|
+                                         (input$category4== "Data Type" & input$category5 == "Data Type")|
+                                         (input$category4== "Subject" & input$category5 == "Data Type")|
+                                         (input$category4== "Subject" & input$category5 == "Subject")){
+                                 input$category5
+                               }else if((input$category5== "Data Type" & input$category6 == "Subject")|
+                                        (input$category5== "Data Type" & input$category6 == "Data Type")|
+                                        (input$category5== "Subject" & input$category6 == "Data Type")|
+                                        (input$category5== "Subject" & input$category6 == "Subject")){
+                                 input$category6
+                               }else if( (input$category6== "Data Type" & input$category4 == "Subject")|
+                                         (input$category6== "Data Type" & input$category4 == "Data Type")|
+                                         (input$category6== "Subject" & input$category4 == "Data Type")|
+                                         (input$category6== "Subject" & input$category4 == "Subject")){
+                                 input$category4
+                               } else{
+                                 input$category6
+                               }
+                               
+                               
+                               
+                               ])+
   geom_bar(width = 0.66) +
-  scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
-                              theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
   theme_minimal() +
-  labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
   theme(
     legend.position = "bottom",
     plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
