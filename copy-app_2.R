@@ -571,9 +571,10 @@ server <- function(input, output, session) {
               ggplot(responses, 
                      aes(x = responses[ , input$category4], 
                          fill =responses[, input$category5]))+
-                geom_bar()+
                 facet_grid(~responses[, input$category6])+
                 geom_bar(width = 0.66) +
+                scale_fill_manual(values= c(theme_Palette[1],theme_Palette[2], theme_Palette[3],theme_Palette[4],
+                                            theme_Palette[5],theme_Palette[6],theme_Palette[7],theme_Palette[8], theme_Palette[9], theme_Palette[10])) +
                 theme_minimal() +
                 labs(title = paste("Data Sources Containing", input$category3, "by", input$category2), y = "Number of Sources", x = paste(input$category2), fill = paste(input$category3)) +
                 theme(
