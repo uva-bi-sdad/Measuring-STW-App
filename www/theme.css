@@ -15,8 +15,12 @@ h2 {
   padding-left: 25px;
   padding-right: 25px;
   text-align: center;
-  padding-top: 10;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  line-height: 25px;
+  
 }
+
 
 
 h3 {
@@ -50,7 +54,10 @@ body {
    
 }
 
+.br { 
+   line-height: 0.7;
 
+} 
 .update{
   font-family: franklin-gothic-urw;
   font-weight: 400;

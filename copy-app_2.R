@@ -166,9 +166,23 @@ title = "Data Discovery",
 # https://stackoverflow.com/questions/56407601/how-to-fix-the-position-of-main-panel-in-r-shiny this almost fixes the title Panel
 
 h2(fluidRow(
-      column(3, img(width = '70%', height = '30%', src = "BII.jpg", align = 'left')),
-      column(6, class = "center","Data Discovery: Skilled Technical Workforce"),
-      column(3, img(width = '50%', height = '20%', src='nsf-ncses.png', align = 'right'))
+      column(3, tags$a(
+        href="https://biocomplexity.virginia.edu/", 
+        tags$img(src="BII.jpg", 
+                 title="BII Link", 
+                 width='70%',
+                 height='30%', 
+                 align = 'left')
+      )),
+      column(6,  tags$span(style= "color:#1B3766;", "Skilled Technical Workforce"), 
+             br(),  
+tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif;
+font-weight: 900;
+   font-style: italic;
+   font-size: 24px;
+   text-transform: uppercase;", "Data Discovery")),
+      column(3, tags$a(
+        href="https://www.nsf.gov/statistics/",tags$img(width = '50%', height = '20%', src='nsf-ncses.png', align = 'right')))
     )),
 
 
