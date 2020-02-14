@@ -242,12 +242,10 @@ hr(),
                 mainPanel( DT::dataTableOutput("mytable1"), width = 10)), 
       tabPanel( h4("Plot"),
              fluidRow(
-               column(2, uiOutput("filter_vars"),
-                      uiOutput("select_vars")
-               ), column(10,  uiOutput("plot")
-                 
-               )
-             )),  
+               column(3, uiOutput("filter_vars") ), 
+               column(9, uiOutput("select_vars"))), hr(),
+             fluidRow(uiOutput("plot"))
+             ),  
 
       tabPanel(h4("Dictionary"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
       tabPanel(h4("Form"), DT::dataTableOutput("form"), tags$hr(),
@@ -331,17 +329,17 @@ server <- function(input, output, session) {
   #Designates the variable choices on the drop down menus on the Plots tab
   output$select_vars <- renderUI({
     req(input$rd)
-    if (input$rd == "One Variable") {fluidRow(column(width = 12,
+    if (input$rd == "One Variable") {fluidRow(column(width = 4,
       selectInput("category1", "Variable", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
     }
-    else if(input$rd == "Two Variables") {fluidRow(column(width = 12, 
-      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
-      selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
+    else if(input$rd == "Two Variables") {fluidRow(column(width = 4, 
+      selectInput("category2", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))),
+      column(width = 4, selectInput("category3", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))))
     }
-    else if(input$rd == "Three Variables"){fluidRow(column(width = 12, 
-      selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" )),
-      selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations")),
-      selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
+    else if(input$rd == "Three Variables"){fluidRow(
+      column(width = 4, selectInput("category4", "Variable 1", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations" ))),
+      column(width = 4, selectInput("category5", "Variable 2", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))),
+      column(width = 4, selectInput("category6", "Variable 3", choices=c("Credentials","Jobs", "Employers", "Skills", "Subject", "Organization Type", "Data Type", "Gender", "Race Ethnicity",  "Persons with Disabilities", "Veterans", "Active military and their families", "Persons who live on tribal lands", "Fields of Study", "Types of Employment or Occupations"))))
     }
   })
   
@@ -674,13 +672,14 @@ server <- function(input, output, session) {
                   input$category5
                 })) +
                 theme(legend.position = "bottom",
+                      strip.text.x = element_text(size = 12),
                       plot.title = element_text(hjust = 0.5, size = 24, face = "bold"),
                       axis.text.x = element_text(size = 18),
                       axis.text.y = element_text(size = 18), 
                       axis.title.x = element_text(size = 18), 
                       axis.title.y = element_text(size = 18))
               
-            }, height = 600, width = 1000)
+            }, height = 600, width = 1200)
             plotOutput("plot8")
      }
  
