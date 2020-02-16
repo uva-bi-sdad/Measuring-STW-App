@@ -10,32 +10,27 @@ output:
 This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's [National Center for Science and Engineering Statistics]( https://www.nsf.gov/statistics/). The purpose is to assess the fitness-for-use of federal, for profit, and not-for-profit  data sources for describing the skilled technical workforce. While this application does not provide datasets, it provides links to respective organization websites and/or datasets if available.
 
 ***
-
-<style>
-div.blue { border-color: #F17E1D; border-style: solid;
-  border-width: 5px; padding: 20px;}
-</style>
 <div class = "blue">
+<h3> What is the Skilled Technical Workforce?</h3>
+<p>A job in the Skill Technical Workforce (STW) requires</p> 
 
-### What is the Skilled Technical Workforce?
+<p><span class = "test";> 1. </span> a high level of knowledge in a technical domain; but</p>
 
-A job in the Skill Technical Workforce (STW) requires 
+<p><span class = "test"> 2. </span> does not require a bachelor's degree for entry.</p> 
+<p style= "white-space: pre;">     
+</p>
+<p>There are numerous data gaps in describing the STW. They include:</p>
 
-<span class = "test";> 1. </span> a high level of knowledge in a technical domain; but
-
-<span class = "test"> 2. </span> does not require a bachelor's degree for entry.
-<br>   </br>
-There are numerous data gaps in describing the STW. They include:
-
-<span class = "test"> 1. </span> Non-degree credential attainment;
+<p><span class = "test"> 1. </span> Non-degree credential attainment;</p>
   
-<span class = "test"> 2. </span> STW demographic variables, such as gender, race, ethnicity, age, and disability;
+<p><span class = "test"> 2. </span> STW demographic variables, such as gender, race, ethnicity, age, and disability;</p>
   
-<span class = "test"> 3. </span> STW skills and non-degree credentials demanded by employers for STW occupations;
+<p><span class = "test"> 3. </span> STW skills and non-degree credentials demanded by employers for STW occupations;</p>
   
-<span class = "test"> 4. </span> Skills and non-degree credentials supplied by the jobs seekers; and
+<p><span class = "test"> 4. </span> Skills and non-degree credentials supplied by the jobs seekers; and</p>
 
-<span class = "test"> 5. </span> STW job environment variables, including employer size, self-employed work, full and part-time work, salary, and benefits.
+<p><span class = "test"> 5. </span> STW job environment variables, including employer size, self-employed work, full and part-time work, salary, and benefits.</p>
+
 </div>
 
 

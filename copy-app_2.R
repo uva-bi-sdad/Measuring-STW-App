@@ -192,7 +192,7 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel( h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel( h4("About"), includeMarkdown("https://github.com/uva-bi-sdad/Measuring-STW-App/blob/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
                br(),
                sidebarPanel(
