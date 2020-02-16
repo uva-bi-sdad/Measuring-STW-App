@@ -6,21 +6,37 @@ h1 {
    text-transform: uppercase;
 }
 
-h2 {
-  font-family: franklin-gothic-urw-cond, sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 44px;
-  text-transform: uppercase;
-  padding-left: 25px;
-  padding-right: 25px;
-  text-align: center;
-  padding-top: 10px;
-  padding-bottom: 0px;
-  line-height: 25px;
+
+.logo{
+  border-top-color: #F17E1D;
+  border-top-style: solid;
+  border-top-width: 8px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   
 }
 
+
+
+h2 {
+font-family: franklin-gothic-urw, sans-serif;
+font-style: normal;
+font-weight: 800;
+  font-size: 40px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 35px;
+
+
+  
+}
+
+ 	@media screen and (min-width: 768px){
+ 	.rwd-break { display: none; }
+ 	}
 
 
 h3 {
@@ -54,10 +70,7 @@ body {
    
 }
 
-.br { 
-   line-height: 0.7;
 
-} 
 .update{
   font-family: franklin-gothic-urw;
   font-weight: 400;

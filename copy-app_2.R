@@ -165,6 +165,7 @@ title = "Data Discovery",
 
 # https://stackoverflow.com/questions/56407601/how-to-fix-the-position-of-main-panel-in-r-shiny this almost fixes the title Panel
 
+tags$div(class = "logo"),
 h2(fluidRow(
       column(3, tags$a(
         href="https://biocomplexity.virginia.edu/", 
@@ -175,12 +176,11 @@ h2(fluidRow(
                  align = 'left')
       )),
       column(6,  tags$span(style= "color:#1B3766;", "Skilled Technical Workforce"), 
-             br(),  
-tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif;
+p(style = "line-height: 5px;", tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif;
 font-weight: 900;
    font-style: italic;
    font-size: 24px;
-   text-transform: uppercase;", "Data Discovery")),
+   text-transform: uppercase;", "Data Discovery"))),
       column(3, tags$a(
         href="https://www.nsf.gov/statistics/",tags$img(width = '50%', height = '20%', src='nsf-ncses.png', align = 'right')))
     )),
@@ -194,6 +194,7 @@ hr(),
       id = 'dataset',
       tabPanel( h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
+               br(),
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns to Show:", 
                                     choiceNames=names(responses), 
@@ -240,15 +241,15 @@ hr(),
                      radioTooltip(id = "show_vars", choice = "Types of Employment or Occupations", title = "Indicates if information on employment or occupations is included in the dataset.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Notes", title = "Any additional information relevant to the data source.", placement = "right", trigger = "hover"),
                 mainPanel( DT::dataTableOutput("mytable1"), width = 10)), 
-      tabPanel( h4("Plot"),
+      tabPanel( h4("Plot"), br(),
              fluidRow(
                column(3, uiOutput("filter_vars") ), 
-               column(9, uiOutput("select_vars"))), hr(),
-             fluidRow(uiOutput("plot"))
+               column(9, uiOutput("select_vars"))), br(),
+             fluidRow(uiOutput("plot"), align ="center")
              ),  
 
       tabPanel(h4("Dictionary"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
-      tabPanel(h4("Form"), DT::dataTableOutput("form"), tags$hr(),
+      tabPanel(h4("Form"), br(), DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
                                 textInput("Data Source Name", "Data Source Name", ""),
@@ -297,7 +298,7 @@ hr(),
                                 radioButtons("Types of Employment/Occupations", "Types of Employment/Occupations", choices = list("Yes", "No")))),
                textAreaInput("Notes", "Notes", ""),
                actionButton("submit", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;")), 
-      tabPanel(h4("Contact"), 
+      tabPanel(h4("Contact"), br(),
                textInput("Name.feedback", "Name", ""), textInput("Email.feedback", "Email", ""), 
                textAreaInput("Comment.feedback", "Comment", ""),
                actionButton("submit.feedback", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;"))
@@ -371,9 +372,9 @@ server <- function(input, output, session) {
                 axis.text.y = element_text(size = 18), 
                 axis.title.x = element_text(size = 18), 
                 axis.title.y = element_text(size = 18))
-          },  height = 600, width = 1000)
+          })
           
-              plotOutput("plot1")
+              plotOutput("plot1", height = 600, width = 1000)
       
     } else if(input$rd=="Two Variables"){
       
