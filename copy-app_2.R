@@ -154,18 +154,11 @@ ui <- fluidPage(
  #theme = shinytheme("cosmo"),
 
   HTML('<script src="//use.typekit.net/tgy5tlj.js"></script>'),
-    
-    HTML('<script>try{Typekit.load();}catch(e){}</script>'),
-  
-  
+  HTML('<script>try{Typekit.load();}catch(e){}</script>'),
   theme = "theme.css",
-  #shinythemes::themeSelector(),
- 
-title = "Data Discovery",
+  title = "Data Discovery",
 
-# https://stackoverflow.com/questions/56407601/how-to-fix-the-position-of-main-panel-in-r-shiny this almost fixes the title Panel
-
-tags$div(class = "logo"),
+#tags$p(class = "logo"),
 h2(fluidRow(
       column(3, tags$a(
         href="https://biocomplexity.virginia.edu/", 
@@ -175,11 +168,11 @@ h2(fluidRow(
                  height='30%', 
                  align = 'left')
       )),
-      column(6,  tags$span(style= "color:#1B3766;", "Skilled Technical Workforce"), 
+      column(6,  p(style = "margin-top: 10px", tags$span(style= "color:#1B3766;", "Skilled Technical Workforce")), 
 p(style = "line-height: 5px;", tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif;
 font-weight: 900;
    font-style: italic;
-   font-size: 24px;
+   font-size: 30px;
    text-transform: uppercase;", "Data Discovery"))),
       column(3, tags$a(
         href="https://www.nsf.gov/statistics/",tags$img(width = '50%', height = '20%', src='nsf-ncses.png', align = 'right')))
@@ -192,7 +185,7 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel( h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel(h4("About"), includeMarkdown("welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
                br(),
                sidebarPanel(
@@ -299,12 +292,13 @@ hr(),
                textAreaInput("Notes", "Notes", ""),
                actionButton("submit", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;")), 
       tabPanel(h4("Contact"), br(),
-               textInput("Name.feedback", "Name", ""), textInput("Email.feedback", "Email", ""), 
+               textInput("Name.feedback", "Name", ""), 
+               textInput("Email.feedback", "Email", ""), 
                textAreaInput("Comment.feedback", "Comment", ""),
                actionButton("submit.feedback", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;"))
     )
   )
-#)
+
 
 
 
@@ -720,12 +714,12 @@ server <- function(input, output, session) {
   })
 
   
-  observeEvent(input$submit.feedback, {
-    showModal(modalDialog(
-      title = "",
-      "Thank you for contacting us. We will return your email shortly."
-    ))
-  })
+  #observeEvent(input$submit.feedback, {
+  #  showModal(modalDialog(
+  #    title = "",
+  #    "Thank you for contacting us. We will return your email shortly."
+  #  ))
+  #})
   
 }
 

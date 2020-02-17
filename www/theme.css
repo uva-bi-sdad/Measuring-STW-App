@@ -7,7 +7,7 @@ h1 {
 }
 
 
-div.blue { border-color: #F17E1D; border-style: solid;
+.blue { border-color: #F17E1D; border-style: solid;
   border-width: 5px; 
   padding-left: 20px;
   padding-right: 20px;
@@ -31,11 +31,10 @@ h2 {
 font-family: franklin-gothic-urw, sans-serif;
 font-style: normal;
 font-weight: 800;
-  font-size: 40px;
+  font-size: 48px;
   text-transform: uppercase;
   text-align: center;
   line-height: 35px;
-
 
   
 }
