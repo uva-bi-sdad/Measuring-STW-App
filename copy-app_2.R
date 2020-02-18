@@ -174,7 +174,7 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel(h4("About"), includeMarkdown("welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel(h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
                br(),
                sidebarPanel(
@@ -395,18 +395,18 @@ server <- function(input, output, session) {
       req(input$category5)
       req(input$category6)
       
-          if((n_distinct(responses[ , input$category4])==2) & 
-             (n_distinct(responses[ , input$category5])==2) & 
-             (n_distinct(responses[ , input$category6])==2)){  
+if((n_distinct(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), input$category4])==2) & 
+   (n_distinct(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), input$category5])==2) & 
+   (n_distinct(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), input$category6])==2)){  
                
             output$plot3<-renderPlot({
   
-                  var1  <- responses[ , input$category4]
-                  var2 <- responses[ , input$category5]
-                  var3 <- responses[ , input$category6]  
+                  var1 <- expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), input$category4]
+                  var2 <- expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), input$category5]
+                  var3 <- expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), input$category6]
     
     
-                  mosaic(xtabs(~ var1 + var2 + var3  ), data = responses, margin = c(3, 10, 2, 10),
+                  mosaic(xtabs(~ var1 + var2 + var3  ), data = expand_responses[!duplicated(expand_responses[,c('Dataset Name', 'Data Source Name', input$category4, input$category5, input$category6)]), ], margin = c(3, 10, 2, 10),
                            shade = T,  gp = gpar(fill = c(theme_Palette[1], theme_Palette[2], theme_Palette[2], theme_Palette[9], theme_Palette[2], theme_Palette[9], theme_Palette[9], theme_Palette[5])), 
                            main = paste("Data Containing ", input$category4, ", ", input$category5, ", and ", input$category6, sep = ""),
                            labeling_args = list(set_varnames = c(var1 = input$category4, var2 = input$category5, var3 = input$category6), 
