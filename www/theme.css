@@ -6,43 +6,39 @@ h1 {
    text-transform: uppercase;
 }
 
+.BII-logo {
+  width: 70%;
+  height:30%;
+}
 
-.blue { border-color: #F17E1D; border-style: solid;
+.NSF-logo{
+  width: 50%;
+  height: 20%;
+}
+
+
+.container-fluid{
+  border-top-color: #F17E1D;
+  border-top-style: solid;
+  border-top-width: 5px;
+}
+
+.blue {
+  border-color: #F17E1D; 
+  border-style: solid;
   border-width: 5px; 
   padding-left: 20px;
   padding-right: 20px;
  }
 
-.logo{
-  border-top-color: #F17E1D;
-  border-top-style: solid;
-  border-top-width: 8px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  
-}
-
-
-
 h2 {
-font-family: franklin-gothic-urw, sans-serif;
-font-style: normal;
-font-weight: 800;
+  font-family: franklin-gothic-urw, sans-serif;
+  font-style: normal;
+  font-weight: 800;
   font-size: 48px;
   text-transform: uppercase;
   text-align: center;
-  line-height: 35px;
-
-  
 }
-
- 	@media screen and (min-width: 768px){
- 	.rwd-break { display: none; }
- 	}
-
 
 h3 {
   font-family: franklin-gothic-urw-comp, sans-serif;
@@ -57,7 +53,6 @@ h4 {
   font-weight: bold;
   font-size: 24px;
   color: #F17E1D;
-  
 }
 
 body {
@@ -72,7 +67,6 @@ body {
    font-style: italic;
    font-size: 24px;
    text-transform: uppercase;
-   
 }
 
 
@@ -87,7 +81,6 @@ body {
   margin-bottom: 10px;
   margin-left: 25px;
   margin-right: 25px;
-
 }
 
 

@@ -8,7 +8,7 @@ output:
 ### Welcome
 This application was created by the Social and Decision Analytics Division of the Biocomplexity Institute and Initiative at the University of Virginia, in partnership with the National Science Foundation's [National Center for Science and Engineering Statistics](https://www.nsf.gov/statistics/). The purpose is to assess the fitness-for-use of federal, for profit, and not-for-profit  data sources for describing the skilled technical workforce. While this application does not provide datasets, it provides links to respective organization websites and/or datasets if available.
 
-<div id = "blue">
+<div class = "blue">
 <h3> What is the Skilled Technical Workforce?</h3>
 <p>A job in the Skill Technical Workforce (STW) requires</p> 
 

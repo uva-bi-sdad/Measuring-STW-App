@@ -158,24 +158,13 @@ ui <- fluidPage(
   theme = "theme.css",
   title = "Data Discovery",
 
-#tags$p(class = "logo"),
-h2(fluidRow(
-      column(3, tags$a(
-        href="https://biocomplexity.virginia.edu/", 
-        tags$img(src="BII.jpg", 
-                 title="BII Link", 
-                 width='70%',
-                 height='30%', 
-                 align = 'left')
-      )),
-      column(6,  p(style = "margin-top: 10px", tags$span(style= "color:#1B3766;", "Skilled Technical Workforce")), 
-p(style = "line-height: 5px;", tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif;
-font-weight: 900;
-   font-style: italic;
-   font-size: 30px;
-   text-transform: uppercase;", "Data Discovery"))),
-      column(3, tags$a(
-        href="https://www.nsf.gov/statistics/",tags$img(width = '50%', height = '20%', src='nsf-ncses.png', align = 'right')))
+  h2(fluidRow(column(3, tags$a(href="https://biocomplexity.virginia.edu/", 
+                        tags$img(class = "BII-logo", src="BII.jpg", title="BII Link", align = "left"))),
+              column(6, p(style = "margin-top: 10px;  line-height: 35px;", tags$span(style= "color:#1B3766;", "Skilled Technical Workforce")), 
+                        p(style = "line-height: 5px;", 
+                          tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif; font-weight: 900; font-style: italic;
+                                            font-size: 30px; text-transform: uppercase;", "Data Discovery"))),
+              column(3, tags$a(href="https://www.nsf.gov/statistics/",tags$img(class = "NSF-logo", src='nsf-ncses.png', align = 'right')))
     )),
 
 
@@ -185,7 +174,7 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel(h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel(h4("About"), includeMarkdown("welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
                br(),
                sidebarPanel(
