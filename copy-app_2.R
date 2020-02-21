@@ -164,7 +164,8 @@ ui <- fluidPage(
                         p(style = "line-height: 5px;", 
                           tags$span(style= "color:#F17E1D; font-family: bodoni-urw, serif; font-weight: 900; font-style: italic;
                                             font-size: 30px; text-transform: uppercase;", "Data Discovery"))),
-              column(3, tags$a(href="https://www.nsf.gov/statistics/",tags$img(class = "NSF-logo", src='nsf-ncses.png', align = 'right')))
+              column(3, tags$a(href="https://www.nsf.gov/statistics/",
+                               tags$img(class = "NSF-logo", src='nsf-ncses.png', align = 'right')))
     )),
 
 
