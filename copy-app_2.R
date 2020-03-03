@@ -24,6 +24,7 @@ library(vcd)
 library(tidyr)
 library(dplyr)
 library(shinythemes)
+library(markdown)
 
 
 ##### THEME COLORS #####
