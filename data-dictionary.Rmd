@@ -1,6 +1,9 @@
 ---
 output: html_document
 ---
+
+This page contains the definitions of all variables included in the data sources table.
+
 ### Data Dictionary
 
 __Data Source:__ An organization collecting the data and link to the organization.

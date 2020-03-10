@@ -177,7 +177,13 @@ hr(),
       id = 'dataset',
       tabPanel(h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
-               br(),
+
+              fluidRow(
+                column(style = "margin-top: 15px;", 12, "This page provides a data table with information about each data source. 
+                       You may filter the variables displayed in the data table by selecting the boxes on the left-hand side. 
+                       To search within columns, use the search bars directly below the column name, or search the entire data sheet by using the search bar at the top of the tab.
+                                      The Excel and CSV buttons export the data table.")),
+               hr(),
                sidebarPanel(
                  checkboxGroupInput("show_vars", "Columns to Show:", 
                                     choiceNames=names(responses), 
@@ -224,7 +230,13 @@ hr(),
                      radioTooltip(id = "show_vars", choice = "Types of Employment or Occupations", title = "Indicates if information on employment or occupations is included in the dataset.", placement = "right", trigger = "hover"),
                      radioTooltip(id = "show_vars", choice = "Notes", title = "Any additional information relevant to the data source.", placement = "right", trigger = "hover"),
                 mainPanel( DT::dataTableOutput("mytable1"), width = 10)), 
-      tabPanel( h4("Plot"), br(),
+      tabPanel( h4("Plot"), 
+                fluidRow(
+                  column(style = "margin-top: 15px;", 12, "This tab displays charts describing 
+                         various categorical variables from the data sources table. 
+                         You may select one to three variables buttons and drop-down lists below.")),
+                hr(),
+                
              fluidRow(
                column(3, uiOutput("filter_vars") ), 
                column(9, uiOutput("select_vars"))), br(),
@@ -232,7 +244,12 @@ hr(),
              ),  
 
       tabPanel(h4("Dictionary"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
-      tabPanel(h4("Form"), br(), DT::dataTableOutput("form"), tags$hr(),
+      tabPanel(h4("Form"),  fluidRow(
+        column(style = "margin-top: 15px;", 12, 
+               "If you see a data source missing from our table, you may fill out the form below. 
+               We will review the proposed addition or change and update the data sources table.")),
+        hr(),
+               DT::dataTableOutput("form"), tags$hr(),
                fluidRow( column(4, textInput("Name", "Name", ""), 
                                 textInput("Affiliation", "Affiliation", ""),
                                 textInput("Data Source Name", "Data Source Name", ""),
@@ -281,7 +298,12 @@ hr(),
                                 radioButtons("Types of Employment/Occupations", "Types of Employment/Occupations", choices = list("Yes", "No")))),
                textAreaInput("Notes", "Notes", ""),
                actionButton("submit", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;")), 
-      tabPanel(h4("Contact"), br(),
+      tabPanel(h4("Contact"), 
+               fluidRow(
+                 column(style = "margin-top: 15px;", 12, 
+                        "Any additional feedback can be submitted through the form below.")),
+               hr(),
+               
                textInput("Name.feedback", "Name", ""), 
                textInput("Email.feedback", "Email", ""), 
                textAreaInput("Comment.feedback", "Comment", ""),
