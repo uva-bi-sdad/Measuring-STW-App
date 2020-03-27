@@ -37,8 +37,19 @@ wheel(theme_Palette)
 
 responses <- read.csv("data-discovery-feb-25.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
 
+
+
+# colnames = c("Price"="Cost Price", "Data Availability Schedule"="When does the data become available", 
+#             "Trended Data"="Can the data be trended", 
+#            "Data Quality Assessments"="Data Quality Assessments Potential biases Potential statistical surveys for comparison", 
+#           "R&D Funding"="Funding amount to support R D"),
 responses<-responses[!apply(responses == "", 1, all),] #remove empty rows
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
+colnames(responses)[colnames(responses)== "Cost Price"] <- "Price"
+colnames(responses)[colnames(responses)== "When does the data become available"] <- "Data Availability Schedule"
+colnames(responses)[colnames(responses)== "Can the data be trended"] <- "Trended Data"
+colnames(responses)[colnames(responses)== "Data Quality Assessments Potential biases Potential statistical surveys for comparison"] <- "Data Quality Assessments"
+colnames(responses)[colnames(responses)== "Funding amount to support R D"] <- "R & D Funding"
 
 # Expand Responses for Visualization of Checkbox Group Items #
 expand_responses <- responses
@@ -244,7 +255,8 @@ hr(),
              fluidRow(uiOutput("plot"), align ="center")
              ),  
 
-      tabPanel(h4("Dictionary"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+      tabPanel(h4("Dictionary"), fluidRow(
+        column(style = "margin-top: 15px;", 12)),includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
       tabPanel(h4("Form"),  fluidRow(
         column(style = "margin-top: 15px;", 12, 
                "If you see a data source missing from our table, you may fill out the form below. 
@@ -319,13 +331,20 @@ hr(),
 server <- function(input, output, session) {
   # This outputs the reactive data table on the Data Sources tab
   output$mytable1 <- DT::renderDataTable({
-    DT::datatable(responses[, input$show_vars, drop = FALSE], extensions = 'Buttons', filter = "top",
-                   options = list(
-                     
-                     buttons = list(list(extend='csv',
-                                                     filename = 'STW-Data-Discovery'),
-                                                list(extend='excel',
-                                                     filename = 'STW-Data-Discovery')), dom="BlfrtipS", iDisplayLength=-1, fixedColumns = TRUE))
+    DT::datatable(responses[, input$show_vars, drop = FALSE],  
+                  filter = "top",
+                  extensions = c('Buttons', 'FixedHeader'),
+       
+                  
+                  options = list(
+                   #fixedHeader = TRUE,
+                    autoWidth = FALSE,
+                     buttons = list(
+                      list(extend='csv',
+                        filename = 'STW-Data-Discovery'),
+                      list(extend='excel',
+                       filename = 'STW-Data-Discovery')), dom="BlfrtipS", iDisplayLength=-1
+                     ))
   })
 
   #This allows filtering between one, two and three variables on the Plots tab
@@ -708,10 +727,11 @@ if((n_distinct(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 
     saveData(formData())
   })
   
-  output$form <- renderDataTable({
+  output$form <- DT::renderDataTable({
+    
     input$submit 
     
-    loadData()
+   DT::datatable(loadData(), class = "table2")
   })
   
   

@@ -76,6 +76,224 @@ body {
   font-size: 16px;
 }
 
+
+
+
+table {
+    table-layout: fixed;
+    width:5100px;
+}
+
+
+table th:nth-child(1), td:nth-child(1) { /*Number Column*/
+  width: 50px;
+  overflow: hidden;
+}
+
+table th:nth-child(2), td:nth-child(2) {
+  width: 200px;
+  overflow: hidden;
+}
+
+table th:nth-child(3), td:nth-child(3) {
+  width: 125px;
+  overflow: hidden;
+}
+
+table th:nth-child(4), td:nth-child(4) {
+  width: 60px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(5), td:nth-child(5) {
+  width: 50px;
+  overflow: hidden;
+}
+
+table th:nth-child(6), td:nth-child(6) { /*Employers*/
+  width: 115px;
+  overflow: hidden;
+}
+
+table th:nth-child(7), td:nth-child(7) {
+  width: 800px;
+  overflow: hidden;
+}
+
+table th:nth-child(8), td:nth-child(8) {
+  width: 400px;
+  overflow: hidden;
+}
+
+table th:nth-child(9), td:nth-child(9) {/*Dataset Link*/
+  width: 400px;
+  overflow: hidden;
+}
+
+table th:nth-child(10), td:nth-child(10) { /*Subject*/
+  width: 150px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(11), td:nth-child(11) {
+  width: 200px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(12), td:nth-child(12) {
+  width: 175px;
+  overflow: hidden;
+}
+
+table th:nth-child(13), td:nth-child(13) { /*Purpose*/
+  width: 700px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(14), td:nth-child(14) {
+  width: 300px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(15), td:nth-child(15) {
+  width: 350px;
+  overflow: hidden;
+}
+
+table th:nth-child(16), td:nth-child(16) {/*Unit of Analysis*/
+  width: 200px;
+  overflow: hidden;
+}
+
+table th:nth-child(17), td:nth-child(17) {
+  width: 300px;
+  overflow: hidden;
+}
+
+table th:nth-child(18), td:nth-child(18) {
+  width: 300px;
+  overflow: hidden;
+}
+
+table th:nth-child(19), td:nth-child(19) { /*Collection Frequency*/
+  width: 400px;
+  overflow: hidden;
+}
+
+table th:nth-child(20), td:nth-child(20) {
+  width: 425px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(21), td:nth-child(21) {
+  width: 250px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(22), td:nth-child(22) {/*Methodology Report Link*/
+  width: 400px;
+  overflow: hidden;
+}
+
+table th:nth-child(23), td:nth-child(23) {
+  width: 400px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(24), td:nth-child(24) {
+  width: 600px;
+  overflow: hidden;
+}
+
+
+table th:nth-child(25), td:nth-child(25) {/* Price*/
+  width: 150px;
+  overflow: hidden;
+}
+
+table th:nth-child(26), td:nth-child(26) {
+  width: 200px;
+  overflow: hidden;
+}
+
+table th:nth-child(27), td:nth-child(27) {
+  width: 400px;
+  overflow: hidden;
+}
+
+table th:nth-child(28), td:nth-child(28) {/*Accessibility*/
+  width: 200px;
+  overflow: hidden;
+}
+
+table th:nth-child(29), td:nth-child(29) {
+  width: 200px;
+  overflow: hidden;
+}
+
+table th:nth-child(30), td:nth-child(30) {
+  width: 275px;
+  overflow: hidden;
+}
+
+table th:nth-child(31), td:nth-child(31) {/*Gender*/
+  width: 100px;
+  overflow: hidden;
+}
+
+table th:nth-child(32), td:nth-child(32) {
+  width: 175px;
+  overflow: hidden;
+}
+
+table th:nth-child(33), td:nth-child(33) {
+  width: 300px;
+  overflow: hidden;
+}
+
+table th:nth-child(34), td:nth-child(34) {/*Veterans*/
+  width: 125px;
+  overflow: hidden;
+}
+
+table th:nth-child(35), td:nth-child(35) {
+  width: 350px;
+  overflow: hidden;
+}
+
+table th:nth-child(36), td:nth-child(36) {
+  width: 350px;
+  overflow: hidden;
+}
+
+table th:nth-child(37), td:nth-child(37) {/*Fields of Study*/
+  width: 175px;
+  overflow: hidden;
+}
+
+table th:nth-child(38), td:nth-child(38) {
+  width: 400px;
+  overflow: hidden;
+}
+
+table th:nth-child(39), td:nth-child(39) {/*Notes*/
+  width: 600px;
+  overflow: hidden;
+}
+
+tr{
+  word-wrap: break-word;
+}
+
+
 .tabbable{
   margin-top: 10px;
   margin-bottom: 10px;
@@ -83,5 +301,225 @@ body {
   margin-right: 25px;
 }
 
+.table2{
+    table-layout: fixed;
+    width:5100px;
+}
+
+.table2 th:nth-child(1), td:nth-child(1) { /*Blank Column*/
+  width: 50px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(2), td:nth-child(2) {/*Name*/
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(3), td:nth-child(3) {/*Affiliation*/
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(4), td:nth-child(4) {/*Data Source name*/
+  width: 200px;
+  overflow: hidden;
+}
 
 
+.table2 th:nth-child(5), td:nth-child(5) {
+  width: 150px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(6), td:nth-child(6) { /*Skills*/
+  width: 100px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(7), td:nth-child(7) {
+  width: 100px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(8), td:nth-child(8) {/*Employers*/
+  width: 150px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(9), td:nth-child(9) {/*STW RElevant*/
+  width: 600px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(10), td:nth-child(10) { /*Dataset Name*/
+  width: 300px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(11), td:nth-child(11) {
+  width: 300px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(12), td:nth-child(12) {
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(13), td:nth-child(13) { /*Organiztion*/
+  width: 200px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(14), td:nth-child(14) {
+  width: 125px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(15), td:nth-child(15) {/*Purpose*/
+  width: 350px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(16), td:nth-child(16) {/*Audience*/
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(17), td:nth-child(17) {
+  width: 300px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(18), td:nth-child(18) {
+  width: 300px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(19), td:nth-child(19) { /*Geographic Unit*/
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(20), td:nth-child(20) {
+  width: 400px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(21), td:nth-child(21) { /*Collection Frequency*/
+  width: 300px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(22), td:nth-child(22) {/*When does the data become available*/
+  width: 600px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(23), td:nth-child(23) {
+  width: 400px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(24), td:nth-child(24) {
+  width: 600px;
+  overflow: hidden;
+}
+
+
+.table2 th:nth-child(25), td:nth-child(25) {/* Data Dictionary Link*/
+  width: 350px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(26), td:nth-child(26) {
+  width: 350px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(27), td:nth-child(27) {
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(28), td:nth-child(28) {/*Funding RD*/
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(29), td:nth-child(29) {
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(30), td:nth-child(30) {
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(31), td:nth-child(31) {/*Data Format*/
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(32), td:nth-child(32) {
+  width: 300px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(33), td:nth-child(33) {
+  width: 125px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(34), td:nth-child(34) {/*RaceEthnity*/
+  width: 200px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(35), td:nth-child(35) {
+  width: 150px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(36), td:nth-child(36) {
+  width: 175px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(37), td:nth-child(37) {/*Tribal Lands*/
+  width: 375px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(38), td:nth-child(38) {
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(39), td:nth-child(39) {/*Types of Employment*/
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(40), td:nth-child(40) {/*Notes*/
+  width: 400px;
+  overflow: hidden;
+}
+
+.table2 th:nth-child(41), td:nth-child(41) {/*Submission Time*/
+  width: 200px;
+  overflow: hidden;
+}
+
+tr{
+  word-wrap: break-word;
+}
