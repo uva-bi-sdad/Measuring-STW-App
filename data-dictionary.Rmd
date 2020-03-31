@@ -1,5 +1,7 @@
 ---
-output: html_document
+output:
+  word_document: default
+  html_document: default
 ---
 
 This page contains the definitions of all variables included in the data sources table.
@@ -57,10 +59,10 @@ __Organization Type:__ Indicates if the organization providing the dataset is fo
   - _Federal_
   
 __Data Type:__ Describes the data by broad method(s) used for collection.
-
-  - _Administrative:_ Statistically designed data collections, such as surveys and experiments, and intentional data collections such as astronomical observaations, remote sensing, and health registeries.
   
-  - _Designed (Survey):_  Collected for the administration of an organization or program by entities, such as government agencies, as they provide services, companies to track orders, and universities to record registered students.
+  - _Administrative:_  Collected for the administration of an organization or program by entities, such as government agencies, as they provide services, companies to track orders, and universities to record registered students.
+  
+  - Designed (Survey):_ Statistically designed data collections, such as surveys and experiments, and intentional data collections such as astronomical observations, remote sensing, and health registries.
   
   - _Opportunity:_ Derived from internet-based information, such as websites and social media and captured through APIs and web scraping.
   
@@ -112,7 +114,7 @@ __Accessibility:__ Method(s) of acquiring data.
  
  - _Portal_
  
- - _Webscraping_
+ - _Web Scraping_
  
 __Data Format:__ The format(s) in which the data is available.
 
@@ -174,7 +176,7 @@ __Persons who live on tribal lands?:__ Indicates if information on tribal lands 
   
   - _No_
 
-__Fields of Study/Types of Training:__ Indicates if information on field of study or types of training is included in the dataset.
+__Fields of Study/Types of Training:__ Indicates if information on the field of study or types of training is included in the dataset.
 
   - _Yes_
   

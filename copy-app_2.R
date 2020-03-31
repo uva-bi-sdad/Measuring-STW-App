@@ -36,13 +36,6 @@ wheel(theme_Palette)
 ##### DATA #####
 
 responses <- read.csv("data-discovery-feb-25.csv", sep = ",",stringsAsFactors = FALSE, header=TRUE, encoding="UTF-8")
-
-
-
-# colnames = c("Price"="Cost Price", "Data Availability Schedule"="When does the data become available", 
-#             "Trended Data"="Can the data be trended", 
-#            "Data Quality Assessments"="Data Quality Assessments Potential biases Potential statistical surveys for comparison", 
-#           "R&D Funding"="Funding amount to support R D"),
 responses<-responses[!apply(responses == "", 1, all),] #remove empty rows
 names(responses) <- stri_trim(gsub("..Yes.No.|i\\.e\\..+or\\.|i\\.e\\..+|\\.{53}.+|\\.+", " ", names(responses)), side = "right")
 colnames(responses)[colnames(responses)== "Cost Price"] <- "Price"
