@@ -62,7 +62,7 @@ __Data Type:__ Describes the data by broad method(s) used for collection.
   
   - _Administrative:_  Collected for the administration of an organization or program by entities, such as government agencies, as they provide services, companies to track orders, and universities to record registered students.
   
-  - Designed (Survey):_ Statistically designed data collections, such as surveys and experiments, and intentional data collections such as astronomical observations, remote sensing, and health registries.
+  - _Designed (Survey):_ Statistically designed data collections, such as surveys and experiments, and intentional data collections such as astronomical observations, remote sensing, and health registries.
   
   - _Opportunity:_ Derived from internet-based information, such as websites and social media and captured through APIs and web scraping.
   
