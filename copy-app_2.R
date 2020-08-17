@@ -56,83 +56,8 @@ expand_responses[["Data Type"]] <- as.list(str_split(expand_responses[["Data Typ
 expand_responses <- expand_responses %>% unnest("Data Type") %>% group_by(`Data Source Name`, `Dataset Name`)
 expand_responses <- as.data.frame(expand_responses)
 
-##### FORM VARIABLES #####
-outputDir <- "form"
-fields <- c("Name", "Affiliation", "Data Source Name", "Credentials", "Skills", "Jobs", "Employers", "STW Relevant", 
-                 "Dataset Name", "Dataset Link", "Subject", "Organization", "Data Type", "Purpose", "Audience", "Population Coverage", 
-                 "Unit of Analysis", "Geographic Unit", "Time Coverage", "Collection Frequency", "When does the data become available?", "Can this data be trended?", 
-                 "Methodology Report Link", "Data Dictionary Link", "Data Quality Assessments", "Cost/Price", "Funding amount to support R&D", "Licensing or Training Required?", 
-                 "Accessibility", "Data Format", "Individuals Identifiable", "Gender", "Race/Ethnicity", "Veterans", "Active Military", "Persons Who Live on Tribal Lands", 
-                 "Fields of Study/Types of Training", "Types of Employment/Occupations", "Notes")
-field_list <- c(fields, "submit_time")
-
-##### FEEDBACK VARIABLES #####
-outputDir.feedback <- "feedback"
-fields.feedback <-c("Name.feedback", "Email.feedback", "Comment.feedback")
-field_feedback_list <- c(fields.feedback, "submit_time")
 
 
-##### FUNCTIONS FOR SAVING AND DISPLAYING FORM INPUTS (see saving checkboxs link) #####
-# This saves the form input data as and .rds object, because CSV does not read lists that are created with the checkbox items
-saveData <- function(input) {
-  data <- data.frame(matrix(nrow=1,ncol=0))
-  
-  for (x in fields) {
-    var <- input[[x]]
-    if (length(var) > 1 ) {
-      
-      data[[x]] <- list(var)
-    } else {
-      data[[x]] <- var
-    }
-  }
-  
-  data$submit_time <- date()
-  
-
-  fileName <- sprintf(
-    "%s_%s.rds", 
-    as.integer(Sys.time()), 
-    digest::digest(data)
-  )
-    saveRDS(
-    object = data,
-    file = file.path(outputDir, fileName)
-  )
-}
-
-loadData <- function() {
-  files <- list.files(outputDir, full.names = TRUE)
-  
-  if (length(files) == 0) {
-   
-    field_list <- c(fields, "submit_time")
-    data <- data.frame(matrix(ncol = length(field_list), nrow = 0))
-    names(data) <- field_list
-  } else {
-    data <- lapply(files, function(x) readRDS(x)) 
-    
-    data <- do.call(smartbind, data)
-  }
-  
-  data
-}
-
-
-##### FUNCTIONS FOR SAVING FEEDBACK INPUTS #####
-saveData.feedback <- function(data) {
-  data <- t(data)
-  names(data) <- fields.feedback
-  data$submit_time <- date()
-  
-  fileName <- sprintf("%s_%s.csv", as.integer(Sys.time()), digest::digest(data))
-  write.csv(
-    x = data,
-    file = file.path(outputDir.feedback, fileName), 
-    row.names = FALSE, 
-    quote = FALSE
-  )
-}
 
 ##### This function allows tooltips for checkbox items on the data sources tab (see stackoverflow link for further information)#####
 radioTooltip <- function(id, choice, title, placement = "bottom", trigger = "hover", options = NULL){
@@ -250,72 +175,20 @@ hr(),
 
       tabPanel(h4("Dictionary"), fluidRow(
         column(style = "margin-top: 15px;", 12)),includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/sarah/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
-      tabPanel(h4("Form"),  fluidRow(
-        column(style = "margin-top: 15px;", 12, 
-               "If you see a data source missing from our table, you may fill out the form below. 
-               We will review the proposed addition or change and update the data sources table.")),
-        hr(),
-               DT::dataTableOutput("form"), tags$hr(),
-               fluidRow( column(4, textInput("Name", "Name", ""), 
-                                textInput("Affiliation", "Affiliation", ""),
-                                textInput("Data Source Name", "Data Source Name", ""),
-                                radioButtons("Credentials", "Credentials", choices = list("Yes", "No")),
-                                radioButtons("Skills", "Skills", choices = list("Yes", "No")),
-                                radioButtons("Jobs", "Jobs", choices = list("Yes", "No")),
-                                radioButtons("Employers", "Employers", choices = list("Yes", "No")),
-                                textAreaInput("STW Relevant", "STW Relevant", ""),
-                                textInput("Dataset Name", "Dataset Name", ""), 
-                                textInput("Dataset Link", "Dataset Link", ""), 
-                                checkboxGroupInput("Subject", 
-                                                   "Subject", 
-                                                   choices = list("Education/Training", "Licenses/Certifications", 
-                                                                  "Jobs/Employment", "Industry"
-                                                   )),
-                                radioButtons("Organization", "Organization", choices = list("Non-Profit", "Federal", 
-                                                                                            "For-Profit")),
-                                checkboxGroupInput("Data Type", "Data Type", choices = list("Administrative", "Opportunity", 
-                                                                                            "Procedural", "Designed (Survey)"))),
-                         column(4,  textAreaInput("Purpose", "Purpose", ""), 
-                                textInput("Audience", "Audience", ""), 
-                                textInput("Population Coverage", "Population Coverage", ""),
-                                textInput("Unit of Analysis", "Unit of Analysis", ""), 
-                                checkboxGroupInput("Geographic Unit", "Geographic Unit", choices = list("National", "State", "City", "Zip Code", "Census Block", "Census Tract")), 
-                                textInput("Time Coverage", "Time Coverage", ""),
-                                radioButtons("Collection Frequency", "Collection Frequency", choices = list("Annual", "Monthly", "Biennial", "Daily", "Real-time", "Quarterly", "One-time")), 
-                                textInput("When does the data become available?", "When does the data become available?", ""),
-                                radioButtons("Can this data be trended", "Can this data be trended?", choices = list("Yes", "No")), 
-                                textInput("Methodology Report Link", "Methodology Report Link", ""), 
-                                textInput("Data Dictionary Link", "Data Dictionary Link", ""), 
-                                textAreaInput("Data Quality Assessments", "Data Quality Assessments", ""), 
-                                textInput("Cost/Price", "Cost/Price", ""), 
-                                textInput("Funding amount to support R&D", "Funding amount to support R&D", ""), 
-                                radioButtons("Licensing or Training Required?", "Licensing or Training Required?", choices = list("Yes", "No"))), 
-                         column(4, 
-                                checkboxGroupInput("Accessibility", "Accessibility", choices = list("API", "Download", "FTP", "Portal", "Webscraping")), 
-                                checkboxGroupInput("Data Format", "Data Format", choices = list("CSV", "Excel", "TXT", "PDF", "JSON", "SAS", "R", "SPSS")), 
-                                radioButtons("Individuals Identifiable", "Individuals Identifiable", choices = list("Yes", "No")), 
-                                radioButtons("Gender", "Gender", choices = list("Yes", "No")), 
-                                radioButtons("Race/Ethnicity", "Race/Ethnicity", choices = list("Yes", "No")), 
-                                radioButtons("Persons with Disabilities", "Persons with Disabilities", choices = list("Yes", "No")), 
-                                radioButtons("Veterans", "Veterans", choices = list("Yes", "No")), 
-                                radioButtons("Active Military", "Active Military", choices = list("Yes", "No")), 
-                                radioButtons("Persons Who Live on Tribals Lands", "Persons Who Live on Tribal Lands", choices = list("Yes", "No")), 
-                                radioButtons("Fields of Study/Types of Training", "Fields of Study/Types of Training", choices = list("Yes", "No")), 
-                                radioButtons("Types of Employment/Occupations", "Types of Employment/Occupations", choices = list("Yes", "No")))),
-               textAreaInput("Notes", "Notes", ""),
-               actionButton("submit", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;")), 
+
       tabPanel(h4("Contact"), 
                fluidRow(
                  column(style = "margin-top: 15px;", 12, 
-                        "Any additional feedback can be submitted through the form below.")),
-               hr(),
-               
-               textInput("Name.feedback", "Name", ""), 
-               textInput("Email.feedback", "Email", ""), 
-               textAreaInput("Comment.feedback", "Comment", ""),
-               actionButton("submit.feedback", "Submit", style="border-color: #F17E1D; font-size: 20px; padding: 16px 16px;"))
+                        p("For corrections, additions, or questions about the data sources please contact:", br(),
+                        "Vicki A Lancaster, Principal Scientist", br(),
+                       tags$a(href="mailto:val7zv@virginia.edu", "val7zv@virginia.edu"), br(),
+                        "Social & Decision Analytics Division", br(), 
+                        "Biocomplexity Institute & Initiative", br(), 
+                        "University of Virginia", br(),  
+                        "Suite 2910, 1100 Wilson Blvd, Arlington, VA 22209")))
+             )
     )
-  )
+ )
 
 
 
@@ -706,46 +579,6 @@ if((n_distinct(expand_responses[!duplicated(expand_responses[,c('Dataset Name', 
   }
 })
   
-  
-  ##### FORM DATA #####
-  #This displays the form entries
-  
-  formData <- reactive({
-    data <- sapply(field_list, function(x) input[[x]])
-    data
-  })
-  
-  
-  observeEvent(input$submit, {
-    saveData(formData())
-  })
-  
-  output$form <- DT::renderDataTable({
-    
-    input$submit 
-    
-   DT::datatable(loadData(), class = "table2")
-  })
-  
-  
-  ##### FEEDBACK DATA #####
-  formData.feedback <- reactive({
-    data <- sapply(fields.feedback, function(x) input[[x]])
-    data
-  })
-  
-  # When the Submit button is clicked, save the form data
-  observeEvent(input$submit.feedback, {
-    saveData.feedback(formData.feedback())
-  })
-
-  
-  #observeEvent(input$submit.feedback, {
-  #  showModal(modalDialog(
-  #    title = "",
-  #    "Thank you for contacting us. We will return your email shortly."
-  #  ))
-  #})
   
 }
 

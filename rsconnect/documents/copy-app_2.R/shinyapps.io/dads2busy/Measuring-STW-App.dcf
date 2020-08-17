@@ -1,0 +1,12 @@
+name: Measuring-STW-App
+title: Measuring-STW-App
+username:
+account: dads2busy
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1834208
+bundleId: 3525293
+url: https://dads2busy.shinyapps.io/Measuring-STW-App/
+when: 1597670608.46069
+asMultiple: FALSE
+asStatic: FALSE
