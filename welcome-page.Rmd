@@ -38,9 +38,6 @@ Variables may be selected on the <span style="color:#F17E1D; font-weight: bold">
 
 The <span style="color:#F17E1D; font-weight: bold">Data Dictionary</span> tab includes definitions of all variables included in the data sources table.
 
-If you see a data source missing from our table, you may fill out the <span style="color:#F17E1D; font-weight: bold">Form</span>. We will review the proposed addition or change and update the data sources table.
-
-Any additional feedback can be submitted through the <span style="color:#F17E1D; font-weight: bold">Contact</span> tab.
 
 ***
 
