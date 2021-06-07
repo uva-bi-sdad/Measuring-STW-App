@@ -105,7 +105,7 @@ hr(),
 
     tabsetPanel(
       id = 'dataset',
-      tabPanel(h4("About"), includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/master/welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
+      tabPanel(h4("About"), includeMarkdown("welcome-page.Rmd")), # you will need to include the path to the "welcome-page.Rmd"
       tabPanel(h4("Data Sources"),
 
               fluidRow(
@@ -174,7 +174,7 @@ hr(),
              ),  
 
       tabPanel(h4("Dictionary"), fluidRow(
-        column(style = "margin-top: 15px;", 12)),includeMarkdown("https://raw.githubusercontent.com/uva-bi-sdad/Measuring-STW-App/master/data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
+        column(style = "margin-top: 15px;", 12)),includeMarkdown("data-dictionary.Rmd")), # you will need to include the path to the "data-dictionary.Rmd"
 
       tabPanel(h4("Contact"), 
                fluidRow(
